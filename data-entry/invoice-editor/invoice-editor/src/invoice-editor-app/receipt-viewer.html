@@ -1,0 +1,45 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/spacing.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/font-icons.html">
+
+<link rel="import" href="../../bower_components/vaadin-themable-mixin/vaadin-themable-mixin.html">
+
+<dom-module id="receipt-viewer">
+  <template>
+    <vaadin-tabs theme="dark centered">
+      <vaadin-tab>
+        <span id="preview">Preview</span>
+      </vaadin-tab>
+      <vaadin-tab>
+        <span id="receipts">Receipts</span>
+      </vaadin-tab>
+    </vaadin-tabs>
+    <div theme="dark" class="viewer-body">
+      <div></div>
+    </div>
+
+  </template>
+
+  <script>
+    (function() {
+      /**
+       * @memberof InvoiceEditorApp
+       */
+      class ReceiptViewerElement extends Vaadin.ThemableMixin(Polymer.Element) {
+        static get is() {
+          return 'receipt-viewer';
+        }
+      }
+      customElements.define(ReceiptViewerElement.is, ReceiptViewerElement);
+      /**
+       * @namespace InvoiceEditorApp
+       */
+      window.InvoiceEditorApp = window.InvoiceEditorApp || {};
+      InvoiceEditorApp.ReceiptViewerElement = ReceiptViewerElement;
+    })();
+  </script>
+</dom-module>

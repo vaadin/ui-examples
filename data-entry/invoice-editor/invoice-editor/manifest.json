@@ -1,0 +1,7 @@
+{
+  "name": "invoice-editor",
+  "short_name": "invoice-editor",
+  "description": "Invoice Editor",
+  "start_url": "/",
+  "display": "standalone"
+}

@@ -1,0 +1,134 @@
+<!--<link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">-->
+<!--<link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">-->
+
+<dom-module id="large-text-field-styles" theme-for="vaadin-text-field">
+    <template>
+        <style>
+            :host([class='large']) [part~="value"] {
+                font-size: var(--lumo-font-size-xxl);
+                --lumo-text-field-size: var(--lumo-size-xl);
+            }
+        </style>
+    </template>
+</dom-module>
+
+<dom-module id="invoice-editor-form-layout-styles" theme-for="vaadin-form-item">
+    <template>
+        <style>
+            :host {
+                --vaadin-form-item-label-width: 0;
+                --vaadin-form-item-label-spacing: 0;
+                --vaadin-form-item-row-spacing: 20px;
+            }
+        </style>
+    </template>
+</dom-module>
+
+<custom-style>
+    <style>
+        :host {
+            display: block;
+            font-family: var(--lumo-font-family);
+            --vaadin-board-width-small: 1120px;
+            --vaadin-board-width-medium: 1280px;
+        }
+
+        vaadin-form-layout:first-of-type {
+            padding: 0 10px 10px 0;
+        }
+
+        .controls-line {
+            display: flex;
+            align-items: center;
+            background: var(--lumo-contrast-5pct);
+            flex-wrap: wrap;
+            padding: 0 10px;
+        }
+
+        .controls-line:first-of-type vaadin-button:not(:last-child) {
+            margin-right: 10px;
+        }
+
+        .invoice-details {
+            flex: 1;
+            display: flex;
+            align-items: center;
+        }
+
+        .invoice-details small {
+            color: var(--lumo-secondary-text-color);
+        }
+
+        .invoice-details b {
+            margin-right: 15px;
+        }
+
+        .flex-1 {
+            flex: 1;
+        }
+
+        #add-transaction span, #add-line span {
+            display: flex;
+            align-items: center;
+        }
+
+        #add-transaction span::before, #add-line span::before {
+            font-family: 'lumo-icons';
+            font-size: var(--lumo-size-s);
+            content: var(--lumo-icons-plus);
+        }
+
+        .currency-selector {
+            width: 90px;
+        }
+    </style>
+</custom-style>
+
+<dom-module id="receipt-viewer-styles" theme-for="receipt-viewer">
+    <template>
+        <style include="lumo-color-legacy">
+            :host {
+                display: flex;
+                flex-direction: column;
+            }
+
+            vaadin-tabs {
+                margin-bottom: 1px solid var(--lumo-tint-70pct);
+            }
+
+            vaadin-tab {
+                margin: 0 40px;
+            }
+
+            .viewer-body {
+                display: flex;
+                background-color: var(--lumo-base-color);
+                flex: 1;
+            }
+
+            .viewer-body div {
+                margin: 50px;
+                background: white;
+                flex: 1;
+            }
+
+            #preview, #receipts {
+                display: flex;
+                flex-direction: column;
+            }
+
+            #preview::before, #receipts::before {
+                font-family: 'lumo-icons';
+                font-size: var(--lumo-size-m);
+            }
+
+            #preview::before {
+                content: var(--lumo-icons-eye);
+            }
+
+            #receipts::before {
+                content: var(--lumo-icons-calendar);
+            }
+        </style>
+    </template>
+</dom-module>

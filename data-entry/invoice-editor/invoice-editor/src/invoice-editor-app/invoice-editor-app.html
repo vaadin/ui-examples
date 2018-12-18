@@ -1,0 +1,207 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/vaadin-ordered-layout/vaadin-vertical-layout.html">
+<link rel="import" href="../../bower_components/vaadin-ordered-layout/vaadin-horizontal-layout.html">
+<link rel="import" href="../../bower_components/vaadin-text-field/vaadin-text-field.html">
+<link rel="import" href="../../bower_components/vaadin-select/vaadin-select.html">
+<link rel="import" href="../../bower_components/vaadin-date-picker/vaadin-date-picker.html">
+<link rel="import" href="../../bower_components/vaadin-rich-text-editor/vaadin-rich-text-editor.html">
+<link rel="import" href="../../bower_components/vaadin-button/vaadin-button.html">
+<link rel="import" href="../../bower_components/vaadin-tabs/vaadin-tabs.html">
+
+<link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-layout.html">
+<link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-item.html">
+
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-pro-grid-edit-column.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-pro-grid.html">
+<link rel="import" href="../../bower_components/vaadin-board/vaadin-board.html">
+<link rel="import" href="../../bower_components/vaadin-board/vaadin-board-row.html">
+
+
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/color.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/font-icons.html">
+
+<link rel="import" href="../../bower_components/vaadin-themable-mixin/vaadin-themable-mixin.html">
+
+<link rel="import" href="receipt-viewer.html">
+<link rel="import" href="invoice-editor-styles.html">
+
+<script src="../data/dummy-data.js"></script>
+
+<dom-module id="invoice-editor-app">
+  <template>
+    <vaadin-board>
+      <vaadin-board-row>
+        <div id="controls" board-cols="2">
+          <div class="controls-line">
+            <div class="invoice-details">
+              <b>Invoice #3225</b>
+              <small>Draft saved 5 minutes ago</small>
+            </div>
+            <vaadin-button theme="error secondary">Discard changes</vaadin-button>
+            <vaadin-button theme="secondary">Save draft</vaadin-button>
+            <vaadin-button theme="primary">Send</vaadin-button>
+          </div>
+          <vaadin-form-layout>
+            <vaadin-form-item>
+              <vaadin-form-layout id="inputs">
+                <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
+                <vaadin-select label="Employee" value="Manolo">
+                  <template>
+                    <vaadin-list-box>
+                      <vaadin-item>Jose</vaadin-item>
+                      <vaadin-item>Manolo</vaadin-item>
+                      <vaadin-item>Pedro</vaadin-item>
+                    </vaadin-list-box>
+                  </template>
+                </vaadin-select>
+                <vaadin-date-picker label="Date" value="2018-12-12"></vaadin-date-picker>
+              </vaadin-form-layout>
+            </vaadin-form-item>
+            <vaadin-form-item>
+              <vaadin-rich-text-editor theme="compact"></vaadin-rich-text-editor>
+            </vaadin-form-item>
+          </vaadin-form-layout>
+          <div class="controls-line">
+            <div class="flex-1">
+              <vaadin-button theme="tertiary" id="add-transaction">
+                <span>Add credit card transaction</span>
+              </vaadin-button>
+            </div>
+            <vaadin-button theme="tertiary" id="add-line" on-click="__addLine">
+              <span>Add line</span>
+            </vaadin-button>
+          </div>
+          <vaadin-pro-grid multi-sort theme="column-borders">
+            <vaadin-pro-grid-edit-column path="product" header="Product"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column width="300px" path="description" header="Description"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="price" header="Price"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="currency" id="currency" header="Currency"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="vat" header="VAT"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="amount" header="Amount"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="category" header="Category"></vaadin-pro-grid-edit-column>
+            <vaadin-pro-grid-edit-column path="total" header="Total"></vaadin-pro-grid-edit-column>
+            <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
+          </vaadin-pro-grid>
+          <div class="controls-line">
+            <div class="flex-1"></div>
+            <div>
+              <span>Total in</span>
+              <vaadin-select class="currency-selector">
+                <template>
+                  <vaadin-list-box>
+                    <vaadin-item>USD</vaadin-item>
+                    <vaadin-item>EUR</vaadin-item>
+                    <vaadin-item>GBP</vaadin-item>
+                  </vaadin-list-box>
+                </template>
+              </vaadin-select>
+              <span>812$</span>
+            </div>
+          </div>
+        </div>
+        <receipt-viewer theme="dark"></receipt-viewer>
+      </vaadin-board-row>
+    </vaadin-board>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class InvoiceEditorApp extends Vaadin.ThemableMixin(Polymer.Element) {
+      static get is() { return 'invoice-editor-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'invoice-editor-app'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+
+        const inputs = this.shadowRoot.querySelector('vaadin-form-layout#inputs');
+        inputs.responsiveSteps = [
+          {minWidth: 0, columns: 1, labelsPosition: 'top'},
+          {minWidth: '20em', columns: 2}
+        ];
+
+        const formLayout = this.shadowRoot.querySelector('vaadin-form-layout');
+        formLayout.responsiveSteps = [
+          {minWidth: 0, columns: 1, labelsPosition: 'top'},
+          {minWidth: '45em', columns: 2}
+        ];
+
+        const grid = this.shadowRoot.querySelector('vaadin-pro-grid');
+        grid.items = window.Vaadin.dummyData;
+
+        grid.querySelectorAll('vaadin-pro-grid-edit-column').forEach(column => {
+          column.headerRenderer = function(root) {
+            root.innerHTML = `<vaadin-grid-sorter path="${column.path}">${column.header}</vaadin-grid-sorter>`;
+          };
+        });
+
+        grid.querySelector('#currency').renderer = (root, column, rowData) => {
+          if (root.firstElementChild) {
+            return;
+          }
+
+          const signContainer = document.createElement('div');
+          if (rowData.item.currency === 'eur') {
+            signContainer.innerText = '€ ' + rowData.item.currency.toUpperCase();
+          } else if (rowData.item.currency === 'usd') {
+            signContainer.innerText = '$ ' + rowData.item.currency.toUpperCase();
+          } else if (rowData.item.currency === 'gbp') {
+            signContainer.innerText = '£ ' + rowData.item.currency.toUpperCase();
+          }
+          root.appendChild(signContainer);
+        };
+
+        grid.querySelector('#delete').renderer = (root, column, rowData) => {
+          if (root.firstElementChild) {
+            return;
+          }
+          const deleteBtn = document.createElement('vaadin-button');
+          deleteBtn.innerText = 'X';
+          deleteBtn.setAttribute('theme', 'small icon');
+          deleteBtn.addEventListener('click', e => {
+            const updatedArray = grid.items.slice(0);
+            updatedArray.splice(rowData.index, 1);
+            grid.items = updatedArray;
+          });
+          root.appendChild(deleteBtn);
+        }
+      }
+
+      __addLine() {
+        const grid = this.shadowRoot.querySelector('vaadin-pro-grid');
+        
+        grid.push('items', {
+          "product": "",
+          "description": "",
+          "price": "",
+          "currency": "",
+          "vat": "",
+          "amount": "",
+          "category": "",
+          "total": ""
+        });
+        grid.render();
+      }
+    }
+
+    window.customElements.define(InvoiceEditorApp.is, InvoiceEditorApp);
+
+    /**
+     * @namespace InvoiceEditorApp
+     */
+    window.InvoiceEditorApp = window.InvoiceEditorApp || {};
+  </script>
+</dom-module>
