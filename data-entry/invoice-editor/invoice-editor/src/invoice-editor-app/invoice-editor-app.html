@@ -12,9 +12,9 @@
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-layout.html">
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-item.html">
 
-<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-pro-grid-edit-column.html">
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro-edit-column.html">
 <link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
-<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-pro-grid.html">
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro.html">
 <link rel="import" href="../../bower_components/vaadin-board/vaadin-board.html">
 <link rel="import" href="../../bower_components/vaadin-board/vaadin-board-row.html">
 
@@ -75,17 +75,17 @@
               <span>Add line</span>
             </vaadin-button>
           </div>
-          <vaadin-pro-grid multi-sort theme="column-borders">
-            <vaadin-pro-grid-edit-column path="product" header="Product"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column width="300px" path="description" header="Description"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="price" header="Price"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="currency" id="currency" header="Currency"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="vat" header="VAT"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="amount" header="Amount"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="category" header="Category"></vaadin-pro-grid-edit-column>
-            <vaadin-pro-grid-edit-column path="total" header="Total"></vaadin-pro-grid-edit-column>
+          <vaadin-grid-pro multi-sort theme="column-borders">
+            <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="currency" id="currency" header="Currency"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="category" header="Category"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
             <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
-          </vaadin-pro-grid>
+          </vaadin-grid-pro>
           <div class="controls-line">
             <div class="flex-1"></div>
             <div>
@@ -139,10 +139,10 @@
           {minWidth: '45em', columns: 2}
         ];
 
-        const grid = this.shadowRoot.querySelector('vaadin-pro-grid');
+        const grid = this.shadowRoot.querySelector('vaadin-grid-pro');
         grid.items = window.Vaadin.dummyData;
 
-        grid.querySelectorAll('vaadin-pro-grid-edit-column').forEach(column => {
+        grid.querySelectorAll('vaadin-grid-pro-edit-column').forEach(column => {
           column.headerRenderer = function(root) {
             root.innerHTML = `<vaadin-grid-sorter path="${column.path}">${column.header}</vaadin-grid-sorter>`;
           };
@@ -181,8 +181,8 @@
       }
 
       __addLine() {
-        const grid = this.shadowRoot.querySelector('vaadin-pro-grid');
-        
+        const grid = this.shadowRoot.querySelector('vaadin-grid-pro');
+
         grid.push('items', {
           "product": "",
           "description": "",
