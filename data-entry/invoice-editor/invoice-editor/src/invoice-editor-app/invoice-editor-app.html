@@ -24,8 +24,6 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/font-icons.html">
 
-<link rel="import" href="../../bower_components/vaadin-themable-mixin/vaadin-themable-mixin.html">
-
 <link rel="import" href="receipt-viewer.html">
 <link rel="import" href="invoice-editor-styles.html">
 
@@ -33,6 +31,7 @@
 
 <dom-module id="invoice-editor-app">
   <template>
+    <style include="invoice-editor-app-styles"></style>
     <vaadin-board>
       <vaadin-board-row>
         <div id="controls" board-cols="2">
@@ -113,7 +112,7 @@
      * @customElement
      * @polymer
      */
-    class InvoiceEditorApp extends Vaadin.ThemableMixin(Polymer.Element) {
+    class InvoiceEditorApp extends Polymer.Element {
       static get is() { return 'invoice-editor-app'; }
       static get properties() {
         return {

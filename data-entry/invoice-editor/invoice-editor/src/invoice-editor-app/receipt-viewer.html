@@ -6,10 +6,9 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/font-icons.html">
 
-<link rel="import" href="../../bower_components/vaadin-themable-mixin/vaadin-themable-mixin.html">
-
 <dom-module id="receipt-viewer">
   <template>
+    <style include="receipt-viewer-styles"></style>
     <vaadin-tabs theme="dark centered">
       <vaadin-tab>
         <span id="preview">Preview</span>
@@ -29,7 +28,7 @@
       /**
        * @memberof InvoiceEditorApp
        */
-      class ReceiptViewerElement extends Vaadin.ThemableMixin(Polymer.Element) {
+      class ReceiptViewerElement extends Polymer.Element {
         static get is() {
           return 'receipt-viewer';
         }
