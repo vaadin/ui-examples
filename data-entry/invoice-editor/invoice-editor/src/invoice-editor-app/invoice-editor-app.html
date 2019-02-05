@@ -42,9 +42,9 @@
               <b>Invoice #3225</b>
               <small>Draft saved 5 minutes ago</small>
             </div>
-            <vaadin-button on-click='__handleInvoice' theme="error secondary">Discard changes</vaadin-button>
-            <vaadin-button on-click='__handleInvoice' theme="secondary">Save draft</vaadin-button>
-            <vaadin-button on-click='__handleInvoice' theme="primary">Send</vaadin-button>
+            <vaadin-button on-click='__discardChanges' theme="error secondary">Discard changes</vaadin-button>
+            <vaadin-button on-click='__saveDraft' theme="secondary">Save draft</vaadin-button>
+            <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
           </div>
           <vaadin-form-layout>
             <vaadin-form-item>
@@ -75,13 +75,13 @@
             <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column id="currency" path="currency" id="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-column id="delete" width="40px" text-align="center"></vaadin-grid-edit-column>
+            <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
           </vaadin-grid-pro>
           <div class="controls-line">
             <div class="flex-1"></div>
@@ -161,16 +161,6 @@
           root.appendChild(signContainer);
         };
 
-        grid.querySelector('#order').renderer = (root, column, rowData) => {
-          if (root.firstElementChild) {
-            return;
-          }
-
-          const infoSpan = document.createElement('span');
-          infoSpan.innerText = rowData.item.order ? "Yes" : "No";
-          root.appendChild(infoSpan);
-        };
-
         grid.querySelector('#delete').renderer = (root, column, rowData) => {
           if (root.firstElementChild) {
             return;
@@ -192,9 +182,6 @@
         grid.addEventListener('item-property-changed', (e => {
           let value = e.detail.value;
 
-          if (typeof e.detail.value === "boolean") {
-            value = e.detail.value ? "Yes" : "No";
-          }
 
           const msg = e.detail.path.charAt(0).toUpperCase() + e.detail.path.slice(1) +
                       ' was updated to be: ' + value +
@@ -205,16 +192,16 @@
         }).bind(this));
       }
 
-      __handleInvoice(e) {
-        const btnText = e.target.innerText;
+      __discardChanges() {
+        this.__appendInfoNotification('Changes were discard!');        
+      }
 
-        if (btnText.search(/discard/gi) > -1) {
-          this.__appendInfoNotification('Changes were discard!');
-        } else if (btnText.search(/send/gi) > -1) {
-          this.__appendInfoNotification('Invoice was send!'); 
-        } else {
-          this.__appendInfoNotification('Changes were saved!');
-        }
+      __saveDraft() {
+        this.__appendInfoNotification('Changes were saved!');
+      }
+
+      __sendInvoice() {
+        this.__appendInfoNotification('Invoice was send!');
       }
 
       __appendInfoNotification(msg) {
@@ -227,6 +214,9 @@
         notify.position = 'bottom-start';
         notify.duration = 3000;
         notify.opened = true;
+        notify.addEventListener('opened-changed', function() {
+          window.document.body.removeChild(notify);
+        });
       }
 
       __addLine() {
