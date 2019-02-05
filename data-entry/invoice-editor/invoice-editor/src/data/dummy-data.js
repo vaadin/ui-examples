@@ -8,6 +8,7 @@
     "vat": "24",
     "amount": "4",
     "category": "Team expenses",
+    "order": false,
     "total": ""
   },
   {
@@ -18,6 +19,7 @@
     "vat": "0",
     "amount": "4",
     "category": "Team expenses",
+    "order": false,
     "total": ""
   },
   {
@@ -28,6 +30,7 @@
     "vat": "24",
     "amount": "1",
     "category": "Personal",
+    "order": true,
     "total": ""
   },
   {
@@ -38,6 +41,7 @@
     "vat": "24",
     "amount": "1",
     "category": "Personal",
+    "order": false,
     "total": ""
   },
   {
@@ -48,6 +52,7 @@
     "vat": "24",
     "amount": "3",
     "category": "Team expenses",
+    "order": true,
     "total": "804.10"
   },
   {
@@ -58,6 +63,7 @@
     "vat": "24",
     "amount": "1",
     "category": "Personal",
+    "order": true,
     "total": ""
   },
   {
@@ -68,6 +74,7 @@
     "vat": "24",
     "amount": "4",
     "category": "Team expenses",
+    "order": true,
     "total": ""
   },
   {
@@ -78,6 +85,7 @@
     "vat": "24",
     "amount": "1",
     "category": "Team expenses",
+    "order": false,
     "total": "212.15"
   }];
 })();

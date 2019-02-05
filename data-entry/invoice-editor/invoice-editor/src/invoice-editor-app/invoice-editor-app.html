@@ -9,6 +9,8 @@
 <link rel="import" href="../../bower_components/vaadin-button/vaadin-button.html">
 <link rel="import" href="../../bower_components/vaadin-tabs/vaadin-tabs.html">
 
+<link rel="import" href="../../bower_components/vaadin-notification/vaadin-notification.html">
+
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-layout.html">
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-item.html">
 
@@ -40,9 +42,9 @@
               <b>Invoice #3225</b>
               <small>Draft saved 5 minutes ago</small>
             </div>
-            <vaadin-button theme="error secondary">Discard changes</vaadin-button>
-            <vaadin-button theme="secondary">Save draft</vaadin-button>
-            <vaadin-button theme="primary">Send</vaadin-button>
+            <vaadin-button on-click='__discardChanges' theme="error secondary">Discard changes</vaadin-button>
+            <vaadin-button on-click='__saveDraft' theme="secondary">Save draft</vaadin-button>
+            <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
           </div>
           <vaadin-form-layout>
             <vaadin-form-item>
@@ -65,23 +67,19 @@
             </vaadin-form-item>
           </vaadin-form-layout>
           <div class="controls-line">
-            <div class="flex-1">
-              <vaadin-button theme="tertiary" id="add-transaction">
-                <span>Add credit card transaction</span>
-              </vaadin-button>
-            </div>
             <vaadin-button theme="tertiary" id="add-line" on-click="__addLine">
-              <span>Add line</span>
+              <span>Add credit card transaction</span>
             </vaadin-button>
           </div>
-          <vaadin-grid-pro multi-sort theme="column-borders">
+          <vaadin-grid-pro multi-sort theme="column-borders compact">
             <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="currency" id="currency" header="Currency"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="category" header="Category"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
+            <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
             <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
             <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
           </vaadin-grid-pro>
@@ -177,6 +175,48 @@
           });
           root.appendChild(deleteBtn);
         }
+
+        grid.querySelector('#currency').editorOptions = ['eur', 'usd', 'gbp'];
+        grid.querySelector('#category').editorOptions = ['Team expenses', 'Personal'];
+
+        grid.addEventListener('item-property-changed', (e => {
+          let value = e.detail.value;
+
+
+          const msg = e.detail.path.charAt(0).toUpperCase() + e.detail.path.slice(1) +
+                      ' was updated to be: ' + value +
+                      ' for product ' + e.detail.item.product;
+
+          this.__appendInfoNotification(msg);
+
+        }).bind(this));
+      }
+
+      __discardChanges() {
+        this.__appendInfoNotification('Changes were discard!');        
+      }
+
+      __saveDraft() {
+        this.__appendInfoNotification('Changes were saved!');
+      }
+
+      __sendInvoice() {
+        this.__appendInfoNotification('Invoice was send!');
+      }
+
+      __appendInfoNotification(msg) {
+        const notify = window.document.createElement('vaadin-notification');
+        notify.renderer = function(root) {
+          root.textContent = msg;
+        };
+
+        window.document.body.appendChild(notify);
+        notify.position = 'bottom-start';
+        notify.duration = 3000;
+        notify.opened = true;
+        notify.addEventListener('opened-changed', function() {
+          window.document.body.removeChild(notify);
+        });
       }
 
       __addLine() {
