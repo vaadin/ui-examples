@@ -159,20 +159,7 @@ public class InvoiceEditor extends Board {
 
         controls.add(detailsLine);
 
-        //receipt-viewer
-        Div receiptViewer = new Div();
-
-        // Tabs
-        Tabs tabs = new Tabs();
-
-        Tab preview = new Tab("Preview");
-        Tab receipts = new Tab("Receipts");
-
-        tabs.addThemeNames("dark centered");
-        tabs.add(preview, receipts);
-        receiptViewer.add(tabs);
-
-        addRow(controls, receiptViewer);
+        addRow(controls);
     }
 
     private static void displayNotification(String propertyName, Invoice item, String newValue) {
