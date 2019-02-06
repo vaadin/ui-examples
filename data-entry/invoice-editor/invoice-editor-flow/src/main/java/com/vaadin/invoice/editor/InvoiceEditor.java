@@ -168,7 +168,7 @@ public class InvoiceEditor extends Board {
         Tab preview = new Tab("Preview");
         Tab receipts = new Tab("Receipts");
 
-        tabs.addThemeName("dark");
+        tabs.addThemeNames("dark centered");
         tabs.add(preview, receipts);
         receiptViewer.add(tabs);
 
