@@ -14,12 +14,12 @@
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-layout.html">
 <link rel="import" href="../../bower_components/vaadin-form-layout/vaadin-form-item.html">
 
-<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro-edit-column.html">
-<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
-<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro.html">
 <link rel="import" href="../../bower_components/vaadin-board/vaadin-board.html">
 <link rel="import" href="../../bower_components/vaadin-board/vaadin-board-row.html">
 
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro-edit-column.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro.html">
 
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/color.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
@@ -33,74 +33,70 @@
 <dom-module id="invoice-editor-app">
   <template>
     <style include="invoice-editor-app-styles"></style>
-    <vaadin-board>
-      <vaadin-board-row>
-        <div id="controls" board-cols="2">
-          <div class="controls-line">
-            <div class="invoice-details">
-              <b>Invoice #3225</b>
-              <small>Draft saved 5 minutes ago</small>
-            </div>
-            <vaadin-button on-click='__discardChanges' theme="error secondary">Discard changes</vaadin-button>
-            <vaadin-button on-click='__saveDraft' theme="secondary">Save draft</vaadin-button>
-            <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
-          </div>
-          <vaadin-form-layout>
-            <vaadin-form-item>
-              <vaadin-form-layout id="inputs">
-                <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
-                <vaadin-select label="Employee" value="Manolo">
-                  <template>
-                    <vaadin-list-box>
-                      <vaadin-item>Jose</vaadin-item>
-                      <vaadin-item>Manolo</vaadin-item>
-                      <vaadin-item>Pedro</vaadin-item>
-                    </vaadin-list-box>
-                  </template>
-                </vaadin-select>
-                <vaadin-date-picker label="Date" value="2018-12-12"></vaadin-date-picker>
-              </vaadin-form-layout>
-            </vaadin-form-item>
-            <vaadin-form-item>
-              <vaadin-rich-text-editor theme="compact"></vaadin-rich-text-editor>
-            </vaadin-form-item>
-          </vaadin-form-layout>
-          <div class="controls-line">
-            <vaadin-button theme="tertiary" id="add-line" on-click="__addLine">
-              <span>Add credit card transaction</span>
-            </vaadin-button>
-          </div>
-          <vaadin-grid-pro multi-sort theme="column-borders compact">
-            <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
-            <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
-          </vaadin-grid-pro>
-          <div class="controls-line">
-            <div class="flex-1"></div>
-            <div>
-              <span>Total in</span>
-              <vaadin-select class="currency-selector">
-                <template>
-                  <vaadin-list-box>
-                    <vaadin-item>USD</vaadin-item>
-                    <vaadin-item>EUR</vaadin-item>
-                    <vaadin-item>GBP</vaadin-item>
-                  </vaadin-list-box>
-                </template>
-              </vaadin-select>
-              <span>812</span>
-            </div>
-          </div>
+    <div id="controls" board-cols="2">
+      <div class="controls-line">
+        <div class="invoice-details">
+          <b>Invoice #3225</b>
+          <small>Draft saved 5 minutes ago</small>
         </div>
-      </vaadin-board-row>
-    </vaadin-board>
+        <vaadin-button on-click='__discardChanges' theme="error secondary">Discard changes</vaadin-button>
+        <vaadin-button on-click='__saveDraft' theme="secondary">Save draft</vaadin-button>
+        <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
+      </div>
+      <vaadin-board>
+        <vaadin-board-row>
+          <vaadin-form-layout id="inputs">
+            <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
+            <vaadin-select label="Employee" value="Manolo">
+              <template>
+                <vaadin-list-box>
+                  <vaadin-item>Jose</vaadin-item>
+                  <vaadin-item>Manolo</vaadin-item>
+                  <vaadin-item>Pedro</vaadin-item>
+                </vaadin-list-box>
+              </template>
+            </vaadin-select>
+            <vaadin-date-picker label="Date" value="2018-12-12"></vaadin-date-picker>
+          </vaadin-form-layout>
+          <div>
+            <vaadin-rich-text-editor theme="compact"></vaadin-rich-text-editor>
+          </div>
+        </vaadin-board-row>
+      </vaadin-board>
+      <div class="controls-line">
+        <vaadin-button theme="tertiary" id="add-line" on-click="__addLine">
+          <span>Add credit card transaction</span>
+        </vaadin-button>
+      </div>
+      <vaadin-grid-pro multi-sort theme="column-borders compact">
+        <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
+      </vaadin-grid-pro>
+      <div class="controls-line">
+        <div class="flex-1"></div>
+        <div>
+          <span>Total in</span>
+          <vaadin-select class="currency-selector">
+            <template>
+              <vaadin-list-box>
+                <vaadin-item>USD</vaadin-item>
+                <vaadin-item>EUR</vaadin-item>
+                <vaadin-item>GBP</vaadin-item>
+              </vaadin-list-box>
+            </template>
+          </vaadin-select>
+          <span>812</span>
+        </div>
+      </div>
+    </div>
   </template>
 
   <script>
@@ -125,13 +121,7 @@
         const inputs = this.shadowRoot.querySelector('vaadin-form-layout#inputs');
         inputs.responsiveSteps = [
           {minWidth: 0, columns: 1, labelsPosition: 'top'},
-          {minWidth: '20em', columns: 2}
-        ];
-
-        const formLayout = this.shadowRoot.querySelector('vaadin-form-layout');
-        formLayout.responsiveSteps = [
-          {minWidth: 0, columns: 1, labelsPosition: 'top'},
-          {minWidth: '45em', columns: 2}
+          {minWidth: '30em', columns: 2}
         ];
 
         const grid = this.shadowRoot.querySelector('vaadin-grid-pro');

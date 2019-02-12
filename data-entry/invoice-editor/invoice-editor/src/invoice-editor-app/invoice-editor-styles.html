@@ -34,10 +34,6 @@
         --vaadin-board-width-medium: 1280px;
       }
 
-      vaadin-form-layout:first-of-type {
-        padding: 0 10px 10px 0;
-      }
-
       .controls-line {
         display: flex;
         align-items: center;
@@ -81,6 +77,16 @@
 
       .currency-selector {
         width: 90px;
+      }
+
+      vaadin-rich-text-editor {
+        margin: 10px 0 10px 10px;
+      }
+
+      @media (max-width: 1120px) {
+        vaadin-rich-text-editor {
+          margin: 10px 0;
+        }
       }
     </style>
   </template>
