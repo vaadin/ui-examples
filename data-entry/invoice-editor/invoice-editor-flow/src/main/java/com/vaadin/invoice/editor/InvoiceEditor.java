@@ -10,8 +10,7 @@ import com.vaadin.flow.component.gridpro.GridPro;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.richtexteditor.RichTextEditor;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -67,10 +66,12 @@ public class InvoiceEditor extends Board {
         controls.getElement().setAttribute("board-cols", "2");
 
         // Input parts layout
-        FormLayout mainFormLayout = new FormLayout();
-        FormLayout.FormItem formItemWrapper = new FormLayout.FormItem();
+        Board board = new Board();
 
         FormLayout inputsFormLayout = new FormLayout();
+        Div inputsFormWrapper = new Div();
+        inputsFormWrapper.setClassName("inputs-wrapper");
+        inputsFormWrapper.add(inputsFormLayout);
 
         // Inputs
         TextField invoiceName = new TextField();
@@ -78,7 +79,7 @@ public class InvoiceEditor extends Board {
         invoiceName.setLabel("Invoice Name");
         invoiceName.setClassName("large");
 
-        TextField employee = new TextField();
+        Select<String> employee = new Select<>("Jose", "Manolo", "Pedro");
         employee.setLabel("Employee");
 
         DatePicker date = new DatePicker();
@@ -87,20 +88,16 @@ public class InvoiceEditor extends Board {
         inputsFormLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0",1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
                 new FormLayout.ResponsiveStep("20em", 2));
+        inputsFormLayout.setId("inputs");
         inputsFormLayout.add(invoiceName, employee, date);
-        formItemWrapper.add(inputsFormLayout);
-
-        mainFormLayout.add(formItemWrapper);
-        mainFormLayout.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0",1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("45em", 2));
-        controls.add(mainFormLayout);
 
         RichTextEditor rte = new RichTextEditor();
         rte.setThemeName("compact");
-        FormLayout.FormItem rteFormItem = new FormLayout.FormItem();
-        rteFormItem.add(rte);
-        mainFormLayout.add(rteFormItem);
+        Div rteWrapper = new Div();
+        rteWrapper.setClassName("rte-wrapper");
+        rteWrapper.add(rte);
+        board.addRow(inputsFormWrapper, rteWrapper);
+        controls.add(board);
 
         // Adds line
         Div addsLine = new Div();
@@ -152,7 +149,17 @@ public class InvoiceEditor extends Board {
         Div detailsLine = new Div();
 
         Div total = new Div();
-        total.setText("Total: $");
+
+        Select<String> totalSelect = new Select<>("USD", "EUR", "GBP");
+        totalSelect.setClassName("currency-selector");
+
+        Span totalText = new Span();
+        totalText.setText("Total in ");
+
+        Span priceText = new Span();
+        priceText.setText(" 812");
+
+        total.add(totalText, totalSelect, priceText);
 
         detailsLine.add(flexBlock, total);
         detailsLine.setClassName("controls-line");

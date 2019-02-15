@@ -1,6 +1,3 @@
-<!--<link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">-->
-<!--<link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">-->
-
 <dom-module id="large-text-field-styles" theme-for="vaadin-text-field">
     <template>
         <style>
@@ -29,12 +26,6 @@
         :host {
             display: block;
             font-family: var(--lumo-font-family);
-            --vaadin-board-width-small: 1120px;
-            --vaadin-board-width-medium: 1280px;
-        }
-
-        vaadin-form-layout:first-of-type {
-            padding: 0 10px 10px 0;
         }
 
         .controls-line {
@@ -67,6 +58,10 @@
             flex: 1;
         }
 
+        #inputs {
+            margin: 0 10px;
+        }
+
         #add-transaction span, #add-line span {
             display: flex;
             align-items: center;
@@ -81,54 +76,15 @@
         .currency-selector {
             width: 90px;
         }
+
+        vaadin-rich-text-editor {
+            margin: 10px 10px 10px 0;
+        }
+
+        @media (max-width: 600px) {
+            vaadin-rich-text-editor {
+                margin: 10px;
+            }
+        }
     </style>
 </custom-style>
-
-<dom-module id="receipt-viewer-styles" theme-for="receipt-viewer">
-    <template>
-        <style include="lumo-color-legacy">
-            :host {
-                display: flex;
-                flex-direction: column;
-            }
-
-            vaadin-tabs {
-                margin-bottom: 1px solid var(--lumo-tint-70pct);
-            }
-
-            vaadin-tab {
-                margin: 0 40px;
-            }
-
-            .viewer-body {
-                display: flex;
-                background-color: var(--lumo-base-color);
-                flex: 1;
-            }
-
-            .viewer-body div {
-                margin: 50px;
-                background: white;
-                flex: 1;
-            }
-
-            #preview, #receipts {
-                display: flex;
-                flex-direction: column;
-            }
-
-            #preview::before, #receipts::before {
-                font-family: 'lumo-icons';
-                font-size: var(--lumo-size-m);
-            }
-
-            #preview::before {
-                content: var(--lumo-icons-eye);
-            }
-
-            #receipts::before {
-                content: var(--lumo-icons-calendar);
-            }
-        </style>
-    </template>
-</dom-module>
