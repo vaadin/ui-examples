@@ -1,9 +1,10 @@
 package com.vaadin.customer.crud;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -87,31 +88,30 @@ public class CustomerCRUD extends VerticalLayout {
         TextField region = new TextField("Region");
         setColspan(region, 2);
 
-        ComboBox<String> countries = new ComboBox<>();
-        countries.setAllowCustomValue(true);
-        countries.setLabel("Country");
-        setColspan(countries, 2);
+        ComboBox<String> country = new ComboBox<>();
+        country.setAllowCustomValue(true);
+        country.setLabel("Country");
+        setColspan(country, 2);
 
-        countries.setItems(getCountriesList());
+        country.setItems(getCountriesList());
         TextField phone = new TextField("Phone");
         setColspan(phone, 2);
         TextField fax = new TextField("Fax");
         setColspan(fax, 2);
 
         FormLayout form = new FormLayout(companyName, contactName, contactEmail,
-                address, city, zip, region, countries, phone, fax);
+                address, city, zip, region, country, phone, fax);
         form.setResponsiveSteps(new FormLayout.ResponsiveStep("0", 4));
 
         Binder<Company> binder = new Binder<>(Company.class);
         binder.bind(companyName, Company::getCompanyName, Company::setCompanyName);
         binder.bind(contactName, Company::getContactName, Company::setContactName);
         binder.bind(contactEmail, Company::getContactEmail, Company::setContactEmail);
-        binder.bind(contactName, Company::getContactName, Company::setContactName);
         binder.bind(address, Company::getAddress, Company::setAddress);
         binder.bind(city, Company::getCity, Company::setCity);
         binder.bind(zip, Company::getZip, Company::setZip);
         binder.bind(region, Company::getRegion, Company::setRegion);
-        binder.bind(countries, Company::getCountry, Company::setCountry);
+        binder.bind(country, Company::getCountry, Company::setCountry);
         binder.bind(phone, Company::getPhone, Company::setPhone);
         binder.bind(fax, Company::getFax, Company::setFax);
 
@@ -123,13 +123,9 @@ public class CustomerCRUD extends VerticalLayout {
     }
 
     private List<String> getCountriesList() {
-        String[] locales = Locale.getISOCountries();
-        List<String> countriesList = new ArrayList<>(locales.length);
-        for (String iso : locales) {
-            countriesList.add((new Locale("", iso)).getDisplayCountry());
-        }
-        Collections.sort(countriesList);
-        return countriesList;
+        return Stream.of(Locale.getISOCountries())
+                .map(iso -> new Locale("", iso).getDisplayCountry()).sorted()
+                .collect(Collectors.toList());
     }
 
 }
