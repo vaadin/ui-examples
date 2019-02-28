@@ -47,6 +47,11 @@ public class CustomerCRUD extends VerticalLayout {
             }
         });
 
+        crud.addDeleteListener(deleteEvent -> {
+            // Delete the item in the database
+            dataProvider.getItems().remove(deleteEvent.getItem());
+        });
+
         add(crud);
     }
 
