@@ -1,0 +1,83 @@
+<link rel="import" href="../../bower_components/polymer/polymer-element.html">
+
+<link rel="import" href="../../bower_components/vaadin-crud/vaadin-crud.html">
+<link rel="import" href="../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+
+<link rel="import" href="customer-crud-styles.html">
+
+<script src="../data/dummy-data.js"></script>
+
+<dom-module id="customer-crud-app">
+  <template>
+    <style include="customer-crud-app-styles"></style>
+    <vaadin-crud>
+      <vaadin-grid slot="grid">
+        <vaadin-grid-column width="160px">
+          <template class="header">Contact person</template>
+          <template>[[item.company.name]]</template>
+        </vaadin-grid-column>
+        <vaadin-grid-column>
+          <template class="header">Contact person</template>
+          <template>[[item.contact.title]] [[item.contact.name]]</template>
+        </vaadin-grid-column>
+        <vaadin-grid-column>
+          <template class="header">Phone</template>
+          <template>[[item.contact.phone]]</template>
+        </vaadin-grid-column>
+        <vaadin-crud-edit-column></vaadin-crud-edit-column>
+      </vaadin-grid>
+      <vaadin-form-layout id="companyForm" slot="form" style="max-width: 60em">
+        <vaadin-text-field path="company.name" label="Company Name" colspan="4" required></vaadin-text-field>
+        <vaadin-text-field path="contact.name" label="Contact Name" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="contact.email" label="Contact Email" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="location.address" label="Address" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="location.city" label="City" required></vaadin-text-field>
+        <vaadin-text-field path="location.zip" label="Postal/Zip Code" required></vaadin-text-field>
+        <br>
+        <vaadin-text-field path="location.region" label="Region" colspan="2" required></vaadin-text-field>
+        <vaadin-combo-box id="countryCombo" path="location.country" colspan="2" label="Country" item-value-path="name"
+          item-label-path="name"></vaadin-combo-box>
+        <br>
+        <vaadin-text-field path="contact.phone" label="Phone" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="contact.fax" label="Fax" colspan="2" required></vaadin-text-field>
+      </vaadin-form-layout>
+    </vaadin-crud>
+  </template>
+
+  <script>
+    /**
+     * @customElement
+     * @polymer
+     */
+    class CustomerCRUDApp extends Polymer.Element {
+      static get is() { return 'customer-crud-app'; }
+      static get properties() {
+        return {
+          prop1: {
+            type: String,
+            value: 'customer-crud-app'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        const crud = this.shadowRoot.querySelector('vaadin-crud');
+        crud.items = window.Vaadin.contacts;
+        crud.set('i18n.newItem', 'New Customer');
+        crud.set('i18n.editItem', 'Update Customer');
+        const form = this.shadowRoot.querySelector('#companyForm');
+        form.responsiveSteps = [{ columns: 4 }];
+        const countryCombo = this.shadowRoot.querySelector('#countryCombo');
+        countryCombo.items = window.Vaadin.countries;
+      }
+    }
+
+    window.customElements.define(CustomerCRUDApp.is, CustomerCRUDApp);
+
+    /**
+     * @namespace CustomerCRUDApp
+     */
+    window.CustomerCRUDApp = window.CustomerCRUDApp || {};
+  </script>
+</dom-module>
