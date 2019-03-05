@@ -182,10 +182,19 @@
           this.__appendInfoNotification(msg);
 
         }).bind(this));
+
+        const rte = this.shadowRoot.querySelector('vaadin-rich-text-editor');
+        rte.value = `[
+          {"attributes":{"bold":true},"insert":"Team lunch participants:"},
+          {"insert":" Manolo, Joonas, and Matti\\nTraveling in Antwerp:\\nMetro from the hotel to the venue"},
+          {"attributes":{"list":"bullet"},"insert":"\\n"},
+          {"insert":"Taxi from the airport to the hotel"},
+          {"attributes":{"list":"bullet"},"insert":"\\n"}
+        ]`;
       }
 
       __discardChanges() {
-        this.__appendInfoNotification('Changes were discard!');        
+        this.__appendInfoNotification('Changes were discard!');
       }
 
       __saveDraft() {
