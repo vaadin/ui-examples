@@ -36,29 +36,31 @@
     <div id="controls" board-cols="2">
       <div class="controls-line">
         <div class="invoice-details">
-          <b>Invoice #3225</b>
+          <span>Invoice #3225</span>
           <small>Draft saved 5 minutes ago</small>
         </div>
-        <vaadin-button on-click='__discardChanges' theme="error secondary">Discard changes</vaadin-button>
-        <vaadin-button on-click='__saveDraft' theme="secondary">Save draft</vaadin-button>
+        <vaadin-button on-click='__discardChanges' theme="error tertiary">Discard changes</vaadin-button>
+        <vaadin-button on-click='__saveDraft' theme="tertiary">Save draft</vaadin-button>
         <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
       </div>
       <vaadin-board>
         <vaadin-board-row>
-          <vaadin-form-layout id="inputs">
-            <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
-            <vaadin-select label="Employee" value="Manolo">
-              <template>
-                <vaadin-list-box>
-                  <vaadin-item>Jose</vaadin-item>
-                  <vaadin-item>Manolo</vaadin-item>
-                  <vaadin-item>Pedro</vaadin-item>
-                </vaadin-list-box>
-              </template>
-            </vaadin-select>
-            <vaadin-date-picker label="Date" value="2018-12-12"></vaadin-date-picker>
-          </vaadin-form-layout>
           <div>
+            <vaadin-form-layout id="inputs">
+              <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
+              <vaadin-select label="Employee" value="Manolo">
+                <template>
+                  <vaadin-list-box>
+                    <vaadin-item>Jose</vaadin-item>
+                    <vaadin-item>Manolo</vaadin-item>
+                    <vaadin-item>Pedro</vaadin-item>
+                  </vaadin-list-box>
+                </template>
+              </vaadin-select>
+              <vaadin-date-picker label="Date" value="2018-12-12"></vaadin-date-picker>
+            </vaadin-form-layout>
+          </div>
+          <div board-cols="2">
             <vaadin-rich-text-editor theme="compact"></vaadin-rich-text-editor>
           </div>
         </vaadin-board-row>
@@ -80,7 +82,7 @@
         <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
         <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
       </vaadin-grid-pro>
-      <div class="controls-line">
+      <div class="controls-line footer">
         <div class="flex-1"></div>
         <div>
           <span>Total in</span>

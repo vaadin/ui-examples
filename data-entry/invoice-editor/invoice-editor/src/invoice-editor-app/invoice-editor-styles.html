@@ -1,6 +1,12 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
 
+<style>
+  body {
+    margin: 0;
+  }
+</style>
+
 <dom-module id="large-text-field-styles" theme-for="vaadin-text-field">
   <template>
     <style>
@@ -39,11 +45,30 @@
         align-items: center;
         background: var(--lumo-contrast-5pct);
         flex-wrap: wrap;
-        padding: 0 10px;
+        padding-left: var(--lumo-space-m);
+        padding-right: var(--lumo-space-s);
       }
 
       .controls-line:first-of-type vaadin-button:not(:last-child) {
-        margin-right: 10px;
+        margin-right: var(--lumo-space-s);
+      }
+
+      vaadin-board {
+        padding: 0 var(--lumo-space-m);
+      }
+
+      vaadin-form-layout {
+        margin-right: var(--lumo-space-xl);
+      }
+
+      @media (max-width: 1120px) {
+        vaadin-form-layout {
+          margin: 0;
+        }
+      }
+
+      vaadin-rich-text-editor {
+        margin: var(--lumo-space-m) 0;
       }
 
       .invoice-details {
@@ -56,8 +81,8 @@
         color: var(--lumo-secondary-text-color);
       }
 
-      .invoice-details b {
-        margin-right: 15px;
+      .invoice-details span {
+        margin-right: var(--lumo-space-m);
       }
 
       .flex-1 {
@@ -79,14 +104,8 @@
         width: 90px;
       }
 
-      vaadin-rich-text-editor {
-        margin: 10px 0 10px 10px;
-      }
-
-      @media (max-width: 1120px) {
-        vaadin-rich-text-editor {
-          margin: 10px 0;
-        }
+      .footer {
+        padding-right: var(--lumo-space-m);
       }
     </style>
   </template>
