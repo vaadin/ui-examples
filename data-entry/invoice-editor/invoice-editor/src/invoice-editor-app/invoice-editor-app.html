@@ -134,17 +134,21 @@
         });
 
         grid.querySelector('#currency').renderer = (root, column, rowData) => {
-          if (root.firstElementChild) {
-            return;
+          let signContainer;
+          if (!root.firstElementChild) {
+            signContainer = document.createElement('div');
+          } else {
+            signContainer = root.querySelector('div');
           }
 
-          const signContainer = document.createElement('div');
           if (rowData.item.currency === 'eur') {
             signContainer.innerText = '€ ' + rowData.item.currency.toUpperCase();
           } else if (rowData.item.currency === 'usd') {
             signContainer.innerText = '$ ' + rowData.item.currency.toUpperCase();
           } else if (rowData.item.currency === 'gbp') {
             signContainer.innerText = '£ ' + rowData.item.currency.toUpperCase();
+          } else {
+            signContainer.innerText = '';
           }
           root.appendChild(signContainer);
         };
