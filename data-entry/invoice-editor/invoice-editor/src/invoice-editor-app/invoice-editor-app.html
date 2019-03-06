@@ -49,13 +49,13 @@
         <vaadin-board-row>
           <div>
             <vaadin-form-layout id="inputs">
-              <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Devoxx 2018"></vaadin-text-field>
+              <vaadin-text-field class="large" colspan="2" label="Invoice Name" value="Trip to Italy"></vaadin-text-field>
               <vaadin-select label="Employee" value="Manolo">
                 <template>
                   <vaadin-list-box>
-                    <vaadin-item>Jose</vaadin-item>
                     <vaadin-item>Manolo</vaadin-item>
-                    <vaadin-item>Pedro</vaadin-item>
+                    <vaadin-item>Joonas</vaadin-item>
+                    <vaadin-item>Matti</vaadin-item>
                   </vaadin-list-box>
                 </template>
               </vaadin-select>
@@ -75,20 +75,20 @@
       <vaadin-grid-pro multi-sort theme="column-borders compact">
         <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column text-align="end" path="price" header="Price"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column id="vat" path="vat" header="VAT"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column text-align="end" id="vat" path="vat" header="VAT"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column text-align="end" path="amount" header="Amount"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column id="total" path="total" header="Total"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column text-align="end" id="total" path="total" header="Total"></vaadin-grid-pro-edit-column>
         <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
       </vaadin-grid-pro>
       <div class="controls-line footer">
         <div class="flex-1"></div>
         <div>
           <span>Total in</span>
-          <vaadin-select class="currency-selector" theme="custom">
+          <vaadin-select class="currency-selector" theme="custom" value="EUR">
             <template>
               <vaadin-list-box>
                 <vaadin-item>USD</vaadin-item>
@@ -243,7 +243,7 @@
       __addLine() {
         const grid = this.shadowRoot.querySelector('vaadin-grid-pro');
 
-        grid.push('items', {
+        grid.unshift('items', {
           "product": "",
           "description": "",
           "price": 0,
