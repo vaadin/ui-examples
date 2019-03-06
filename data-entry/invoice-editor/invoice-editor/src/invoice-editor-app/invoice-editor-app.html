@@ -21,6 +21,8 @@
 <link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
 <link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro.html">
 
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/color.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
@@ -160,7 +162,8 @@
             return;
           }
           const deleteBtn = document.createElement('vaadin-button');
-          deleteBtn.innerText = 'X';
+          deleteBtn.classList.add('delete-button');
+          deleteBtn.innerHTML = '<iron-icon icon="lumo:cross" slot="prefix"></iron-icon>';
           deleteBtn.setAttribute('theme', 'small icon');
           deleteBtn.addEventListener('click', e => {
             const updatedArray = grid.items.slice(0);

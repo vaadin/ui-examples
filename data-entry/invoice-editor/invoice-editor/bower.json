@@ -21,6 +21,7 @@
     "vaadin-form-layout": "vaadin/vaadin-form-layout#^2.1.0",
     "vaadin-tabs": "vaadin/vaadin-tabs#^2.1.1",
     "vaadin-board": "vaadin/vaadin-board#^2.1.0",
-    "vaadin-notification": "vaadin/vaadin-notification#^1.2.1"
+    "vaadin-notification": "vaadin/vaadin-notification#^1.2.1",
+    "iron-icon": "^2.0.1"
   }
 }

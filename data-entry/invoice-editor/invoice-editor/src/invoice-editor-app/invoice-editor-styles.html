@@ -1,5 +1,6 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/icons.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/presets/compact.html">
 
 <style>
@@ -7,6 +8,21 @@
     margin: 0;
   }
 </style>
+
+<dom-module id="custom-button" theme-for="vaadin-button">
+  <template>
+    <style>
+      :host(.delete-button) {
+        padding: var(--lumo-space-xs) 0;
+      }
+
+      :host(.delete-button) ::slotted(*) {
+        color: var(--lumo-contrast-60pct);
+        font-size: var(--lumo-font-size-xl);
+      }
+    </style>
+  </template>
+</dom-module>
 
 <dom-module id="custom-select" theme-for="vaadin-text-field">
   <template>
