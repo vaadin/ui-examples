@@ -4,7 +4,12 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/presets/compact.html">
 
 <style>
+  html {
+    height: 100%;
+  }
+
   body {
+    height: 100%;
     margin: 0;
   }
 </style>
@@ -63,13 +68,21 @@
     <style>
       :host {
         display: block;
+        height: 100%;
         font-family: var(--lumo-font-family);
         --vaadin-board-width-small: 1120px;
         --vaadin-board-width-medium: 1280px;
       }
 
+      #container {
+        display: flex;
+        height: 100%;
+        flex-direction: column;
+      }
+
       .controls-line {
         display: flex;
+        flex: none;
         align-items: center;
         background: var(--lumo-contrast-5pct);
         flex-wrap: wrap;
@@ -97,7 +110,13 @@
       }
 
       vaadin-rich-text-editor {
+        min-height: 30vh;
+        max-height: 50vh;
         margin: var(--lumo-space-m) 0;
+      }
+
+      vaadin-grid-pro {
+        min-height: calc(var(--lumo-size-xl) * 6);
       }
 
       .icon-eur::before,

@@ -35,7 +35,7 @@
 <dom-module id="invoice-editor-app">
   <template>
     <style include="invoice-editor-app-styles"></style>
-    <div id="controls" board-cols="2">
+    <div id="container">
       <div class="controls-line">
         <div class="invoice-details">
           <span>Invoice #3225</span>
@@ -145,8 +145,8 @@
             signContainer = root.querySelector('div');
           }
 
-          signContainer.innerText = rowData.item.currency.toUpperCase();
-          signContainer.className = 'icon-' + rowData.item.currency
+          signContainer.innerText = rowData.item.currency;
+          signContainer.className = 'icon-' + rowData.item.currency.toLowerCase();
           root.appendChild(signContainer);
         };
 
@@ -162,11 +162,11 @@
           let sign;
           const currencyName = rowData.item.currency;
 
-          if (currencyName === 'eur') {
+          if (currencyName === 'EUR') {
             sign = '€';
-          } else if (currencyName === 'usd') {
+          } else if (currencyName === 'USD') {
             sign = '$';
-          } else if (currencyName  === 'gbp') {
+          } else if (currencyName  === 'GBP') {
             sign = '£';
           }
 
@@ -189,12 +189,11 @@
           root.appendChild(deleteBtn);
         }
 
-        grid.querySelector('#currency').editorOptions = ['eur', 'usd', 'gbp'];
+        grid.querySelector('#currency').editorOptions = ['EUR', 'USD', 'GBP'];
         grid.querySelector('#category').editorOptions = ['Team expenses', 'Personal'];
 
         grid.addEventListener('item-property-changed', (e => {
           let value = e.detail.value;
-
 
           const msg = e.detail.path.charAt(0).toUpperCase() + e.detail.path.slice(1) +
                       ' was updated to be: ' + value +
@@ -247,12 +246,13 @@
         grid.push('items', {
           "product": "",
           "description": "",
-          "price": "",
+          "price": 0,
           "currency": "",
-          "vat": "",
-          "amount": "",
+          "vat": 0,
+          "order": false,
+          "amount": 0,
           "category": "",
-          "total": ""
+          "total": 0
         });
         grid.render();
       }
