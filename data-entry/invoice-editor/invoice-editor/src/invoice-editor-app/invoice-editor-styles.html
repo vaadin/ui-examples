@@ -1,11 +1,23 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/presets/compact.html">
 
 <style>
   body {
     margin: 0;
   }
 </style>
+
+<dom-module id="custom-select" theme-for="vaadin-text-field">
+  <template>
+    <style>
+      :host([theme="custom"]) [part="input-field"],
+      :host([theme="custom"]) [part="input-field"] {
+        background-color: transparent;
+      }
+    </style>
+  </template>
+</dom-module>
 
 <dom-module id="large-text-field-styles" theme-for="vaadin-text-field">
   <template>
