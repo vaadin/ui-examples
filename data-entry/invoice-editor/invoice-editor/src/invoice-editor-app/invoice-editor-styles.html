@@ -100,6 +100,35 @@
         margin: var(--lumo-space-m) 0;
       }
 
+      .icon-eur::before,
+      .icon-usd::before,
+      .icon-gbp::before {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        margin-right: var(--lumo-space-m);
+        color: var(--lumo-base-color);
+        height: var(--lumo-size-xs);
+        width: var(--lumo-size-xs);
+        border-radius: 50%;
+      }
+
+      .icon-eur::before {
+        content: '€';
+        background-color: var(--lumo-primary-color);
+      }
+
+      .icon-usd::before  {
+        content: '$'; 
+        background-color: var(--lumo-success-color);
+      }
+
+      .icon-gbp::before  {
+        content: '£';
+        background-color: var(--lumo-error-color);
+      }
+
       .invoice-details {
         flex: 1;
         display: flex;

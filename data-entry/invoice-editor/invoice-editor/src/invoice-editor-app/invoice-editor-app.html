@@ -77,11 +77,11 @@
         <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column path="price" header="Price"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="currency" path="currency" header="Currency" editor-type="select"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="vat" header="VAT"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column id="vat" path="vat" header="VAT"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column path="amount" header="Amount"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="category" path="category" header="Category" editor-type="select"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column id="order" path="order" header="Order completed" editor-type="checkbox"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="total" header="Total"></vaadin-grid-pro-edit-column>
+        <vaadin-grid-pro-edit-column id="total" path="total" header="Total"></vaadin-grid-pro-edit-column>
         <vaadin-grid-column id="delete" width="70px" text-align="center"></vaadin-grid-edit-column>
       </vaadin-grid-pro>
       <div class="controls-line footer">
@@ -145,16 +145,32 @@
             signContainer = root.querySelector('div');
           }
 
-          if (rowData.item.currency === 'eur') {
-            signContainer.innerText = '€ ' + rowData.item.currency.toUpperCase();
-          } else if (rowData.item.currency === 'usd') {
-            signContainer.innerText = '$ ' + rowData.item.currency.toUpperCase();
-          } else if (rowData.item.currency === 'gbp') {
-            signContainer.innerText = '£ ' + rowData.item.currency.toUpperCase();
-          } else {
-            signContainer.innerText = '';
-          }
+          signContainer.innerText = rowData.item.currency.toUpperCase();
+          signContainer.className = 'icon-' + rowData.item.currency
           root.appendChild(signContainer);
+        };
+
+        grid.querySelector('#vat').renderer = (root, column, rowData) => {
+          root.textContent = rowData.item.vat + '%';
+        };
+
+        grid.querySelector('#order').renderer = (root, column, rowData) => {
+          root.textContent = rowData.item.order ? 'Yes' : 'No';
+        };
+
+        grid.querySelector('#total').renderer = (root, column, rowData) => {
+          let sign;
+          const currencyName = rowData.item.currency;
+
+          if (currencyName === 'eur') {
+            sign = '€';
+          } else if (currencyName === 'usd') {
+            sign = '$';
+          } else if (currencyName  === 'gbp') {
+            sign = '£';
+          }
+
+          root.textContent = rowData.item.total ? sign + rowData.item.total : '';
         };
 
         grid.querySelector('#delete').renderer = (root, column, rowData) => {
