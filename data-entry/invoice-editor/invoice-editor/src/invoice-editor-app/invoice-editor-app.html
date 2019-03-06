@@ -72,7 +72,7 @@
           <span>Add credit card transaction</span>
         </vaadin-button>
       </div>
-      <vaadin-grid-pro multi-sort theme="column-borders compact">
+      <vaadin-grid-pro multi-sort theme="column-borders compact" items="[[items]]">
         <vaadin-grid-pro-edit-column path="product" header="Product"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column width="300px" path="description" header="Description"></vaadin-grid-pro-edit-column>
         <vaadin-grid-pro-edit-column text-align="end" path="price" header="Price"></vaadin-grid-pro-edit-column>
@@ -115,6 +115,11 @@
           prop1: {
             type: String,
             value: 'invoice-editor-app'
+          },
+
+          items: {
+            type: Array,
+            value: () => window.Vaadin.dummyData
           }
         };
       }
@@ -129,20 +134,17 @@
         ];
 
         const grid = this.shadowRoot.querySelector('vaadin-grid-pro');
-        grid.items = window.Vaadin.dummyData;
 
-        grid.querySelectorAll('vaadin-grid-pro-edit-column').forEach(column => {
-          column.headerRenderer = function(root) {
+        Array.from(grid.querySelectorAll('vaadin-grid-pro-edit-column')).forEach(column => {
+          column.headerRenderer = root => {
             root.innerHTML = `<vaadin-grid-sorter path="${column.path}">${column.header}</vaadin-grid-sorter>`;
           };
         });
 
         grid.querySelector('#currency').renderer = (root, column, rowData) => {
-          let signContainer;
-          if (!root.firstElementChild) {
+          let signContainer = root.firstElementChild;
+          if (!signContainer) {
             signContainer = document.createElement('div');
-          } else {
-            signContainer = root.querySelector('div');
           }
 
           signContainer.innerText = rowData.item.currency;
@@ -174,34 +176,29 @@
         };
 
         grid.querySelector('#delete').renderer = (root, column, rowData) => {
-          if (root.firstElementChild) {
-            return;
+          if (!root.firstElementChild) {
+            const deleteBtn = document.createElement('vaadin-button');
+            deleteBtn.classList.add('delete-button');
+            deleteBtn.innerHTML = '<iron-icon icon="lumo:cross" slot="prefix"></iron-icon>';
+            deleteBtn.setAttribute('theme', 'small icon');
+            deleteBtn.addEventListener('click', e => {
+              this.items = this.items.filter(i => i !== deleteBtn._rowItem);
+            });
+            root.appendChild(deleteBtn);
           }
-          const deleteBtn = document.createElement('vaadin-button');
-          deleteBtn.classList.add('delete-button');
-          deleteBtn.innerHTML = '<iron-icon icon="lumo:cross" slot="prefix"></iron-icon>';
-          deleteBtn.setAttribute('theme', 'small icon');
-          deleteBtn.addEventListener('click', e => {
-            const updatedArray = grid.items.slice(0);
-            updatedArray.splice(rowData.index, 1);
-            grid.items = updatedArray;
-          });
-          root.appendChild(deleteBtn);
+          root.firstElementChild._rowItem = rowData.item;
         }
 
         grid.querySelector('#currency').editorOptions = ['EUR', 'USD', 'GBP'];
         grid.querySelector('#category').editorOptions = ['Team expenses', 'Personal'];
 
-        grid.addEventListener('item-property-changed', (e => {
-          let value = e.detail.value;
-
+        grid.addEventListener('item-property-changed', e => {
           const msg = e.detail.path.charAt(0).toUpperCase() + e.detail.path.slice(1) +
-                      ' was updated to be: ' + value +
+                      ' was updated to be: ' + e.detail.value +
                       ' for product ' + e.detail.item.product;
 
           this.__appendInfoNotification(msg);
-
-        }).bind(this));
+        });
 
         const rte = this.shadowRoot.querySelector('vaadin-rich-text-editor');
         rte.value = `[
@@ -227,23 +224,19 @@
 
       __appendInfoNotification(msg) {
         const notify = window.document.createElement('vaadin-notification');
-        notify.renderer = function(root) {
-          root.textContent = msg;
-        };
+        notify.renderer = root => root.textContent = msg;
 
         window.document.body.appendChild(notify);
         notify.position = 'bottom-start';
         notify.duration = 3000;
         notify.opened = true;
-        notify.addEventListener('opened-changed', function() {
+        notify.addEventListener('opened-changed', () => {
           window.document.body.removeChild(notify);
         });
       }
 
       __addLine() {
-        const grid = this.shadowRoot.querySelector('vaadin-grid-pro');
-
-        grid.unshift('items', {
+        this.unshift('items', {
           "product": "",
           "description": "",
           "price": 0,
@@ -254,7 +247,6 @@
           "category": "",
           "total": 0
         });
-        grid.render();
       }
     }
 
