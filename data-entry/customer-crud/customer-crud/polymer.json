@@ -1,0 +1,44 @@
+{
+  "entrypoint": "index.html",
+  "shell": "src/customer-crud-app/customer-crud-app.html",
+  "fragments": [
+    "src/customer-crud-app/customer-crud-app.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "bower.json",
+    "index.html",
+    "src/customer-crud-app/customer-crud-app.html"
+  ],
+  "extraDependencies": [
+    "bower_components/webcomponentsjs/*.js",
+    "manifest.json"
+  ],
+  "builds": [
+    {
+      "name": "customer-crud-app",
+      "js": {
+        "minify": true,
+        "compile": "es5",
+        "transformModulesToAmd": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true,
+      "addPushManifest": false,
+      "preset": "es5-bundled"
+    }
+  ],
+  "autoBasePath": true,
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ]
+  },
+  "moduleResolution": "node"
+}
