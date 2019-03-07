@@ -1,7 +1,44 @@
 {
+  "entrypoint": "index.html",
+  "shell": "src/invoice-editor-app/invoice-editor-app.html",
+  "fragments": [
+    "src/invoice-editor-app/invoice-editor-app.html"
+  ],
+  "sources": [
+    "src/**/*",
+    "bower.json",
+    "index.html",
+    "src/invoice-editor-app/invoice-editor-app.html"
+  ],
+  "extraDependencies": [
+    "bower_components/webcomponentsjs/*.js",
+    "manifest.json"
+  ],
+  "builds": [
+    {
+      "name": "invoice-editor-app",
+      "js": {
+        "minify": true,
+        "compile": "es5",
+        "transformModulesToAmd": true
+      },
+      "css": {
+        "minify": true
+      },
+      "html": {
+        "minify": true
+      },
+      "bundle": true,
+      "addServiceWorker": true,
+      "addPushManifest": false,
+      "preset": "es5-bundled"
+    }
+  ],
+  "autoBasePath": true,
   "lint": {
     "rules": [
       "polymer-2"
     ]
-  }
+  },
+  "moduleResolution": "node"
 }
