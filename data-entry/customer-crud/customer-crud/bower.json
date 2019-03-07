@@ -7,7 +7,6 @@
   },
   "devDependencies": {
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "vaadin-crud": "vaadin/vaadin-crud#^1.0.1",
-    "vaadin-combo-box": "vaadin/vaadin-combo-box#^4.2.5"
+    "vaadin": "vaadin/vaadin#^13.0.0"
   }
 }
