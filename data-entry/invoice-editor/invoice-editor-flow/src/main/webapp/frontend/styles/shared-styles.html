@@ -1,3 +1,19 @@
+<link rel="import" href="../bower_components/vaadin-lumo-styles/typography.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/sizing.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/icons.html">
+<link rel="import" href="../bower_components/vaadin-lumo-styles/presets/compact.html">
+
+<dom-module id="custom-select" theme-for="vaadin-text-field">
+    <template>
+        <style>
+            :host([theme="custom"]) [part="input-field"],
+            :host([theme="custom"]) [part="input-field"] {
+                background-color: transparent;
+            }
+        </style>
+    </template>
+</dom-module>
+
 <dom-module id="large-text-field-styles" theme-for="vaadin-text-field">
     <template>
         <style>
@@ -23,21 +39,91 @@
 
 <custom-style>
     <style>
-        :host {
-            display: block;
+        html {
+            height: 100%;
+        }
+
+        body {
+            margin: 0;
+            height: 100%;
             font-family: var(--lumo-font-family);
+            --vaadin-board-width-small: 1120px;
+            --vaadin-board-width-medium: 1280px;
+        }
+
+        #container {
+            display: flex;
+            height: 100%;
+            flex-direction: column;
         }
 
         .controls-line {
             display: flex;
+            flex: none;
             align-items: center;
             background: var(--lumo-contrast-5pct);
             flex-wrap: wrap;
-            padding: 0 10px;
+            padding-left: var(--lumo-space-m);
+            padding-right: var(--lumo-space-s);
         }
 
         .controls-line:first-of-type vaadin-button:not(:last-child) {
-            margin-right: 10px;
+            margin-right: var(--lumo-space-s);
+        }
+
+        vaadin-board {
+            width: auto !important;
+            padding: 0 var(--lumo-space-m);
+            margin-bottom: var(--lumo-space-xl);
+        }
+
+        vaadin-form-layout {
+            margin-right: var(--lumo-space-xl);
+        }
+
+        @media (max-width: 1120px) {
+            vaadin-form-layout {
+                margin: 0;
+            }
+        }
+
+        vaadin-rich-text-editor {
+            min-height: 30vh;
+            max-height: 50vh;
+            margin: var(--lumo-space-m) 0;
+        }
+
+        vaadin-grid-pro {
+            min-height: calc(var(--lumo-size-xl) * 6);
+        }
+
+        .icon-eur::before,
+        .icon-usd::before,
+        .icon-gbp::before {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: var(--lumo-space-m);
+            color: var(--lumo-base-color);
+            height: var(--lumo-size-xs);
+            width: var(--lumo-size-xs);
+            border-radius: 50%;
+        }
+
+        .icon-eur::before {
+            content: '€';
+            background-color: var(--lumo-primary-color);
+        }
+
+        .icon-usd::before  {
+            content: '$';
+            background-color: var(--lumo-success-color);
+        }
+
+        .icon-gbp::before  {
+            content: '£';
+            background-color: var(--lumo-error-color);
         }
 
         .invoice-details {
@@ -46,20 +132,17 @@
             align-items: center;
         }
 
-        .invoice-details small {
+        .invoice-details span.small {
+            font-size: smaller;
             color: var(--lumo-secondary-text-color);
         }
 
-        .invoice-details b {
-            margin-right: 15px;
+        .invoice-details span {
+            margin-right: var(--lumo-space-m);
         }
 
         .flex-1 {
             flex: 1;
-        }
-
-        #inputs {
-            margin: 0 10px;
         }
 
         #add-transaction span, #add-line span {
@@ -77,14 +160,8 @@
             width: 90px;
         }
 
-        vaadin-rich-text-editor {
-            margin: 10px 10px 10px 0;
-        }
-
-        @media (max-width: 600px) {
-            vaadin-rich-text-editor {
-                margin: 10px;
-            }
+        .footer {
+            padding-right: var(--lumo-space-m);
         }
     </style>
 </custom-style>

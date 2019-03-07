@@ -85,6 +85,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.webjars.bowergithub.vaadin</groupId>
+            <artifactId>vaadin-lumo-styles</artifactId>
+            <version>1.4.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-grid-pro-flow</artifactId>
             <version>1.0.0</version>

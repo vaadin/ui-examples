@@ -1,6 +1,7 @@
 package com.vaadin.invoice.editor;
 
 import com.vaadin.flow.component.board.Board;
+import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.HtmlImport;
@@ -24,6 +25,7 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static com.vaadin.invoice.editor.Description.getRandomDescription;
 import static com.vaadin.invoice.editor.Currency.getRandomCurrency;
 import static com.vaadin.invoice.editor.Category.getRandomCategory;
 
@@ -33,12 +35,12 @@ import static com.vaadin.invoice.editor.Category.getRandomCategory;
 @Route("")
 @PWA(name = "Invoice Editor", shortName = "Invoice Editor")
 @HtmlImport("frontend://styles/shared-styles.html")
-public class InvoiceEditor extends Board {
+public class InvoiceEditor extends Div {
 
     public InvoiceEditor() {
-        // Controls part
-        Div controls = new Div();
+        setId("container");
 
+        // Controls part
         Div controlsLine = new Div();
         controlsLine.addClassName("controls-line");
 
@@ -48,29 +50,27 @@ public class InvoiceEditor extends Board {
 
         Span invoiceNameHeader = new Span("Invoice #3225");
         Span draftedSpan = new Span("Draft saved 5 minutes ago");
+        draftedSpan.setClassName("small");
 
         detailsWrapper.add(invoiceNameHeader, draftedSpan);
 
         // Buttons
         Button discardBtn = new Button("Discard changes", e -> Notification.show("Changes were discard!"));
-        discardBtn.setThemeName("error secondary");
+        discardBtn.setThemeName("error tertiary");
 
         Button saveDraftBtn = new Button("Save draft", e -> Notification.show("Changes were saved!"));
-        saveDraftBtn.setThemeName("secondary");
+        saveDraftBtn.setThemeName("tertiary");
 
         Button sendBtn = new Button("Send", e -> Notification.show("Invoice was sent!"));
         sendBtn.setThemeName("primary");
 
         controlsLine.add(detailsWrapper, discardBtn, saveDraftBtn, sendBtn);
-        controls.add(controlsLine);
-        controls.getElement().setAttribute("board-cols", "2");
 
         // Input parts layout
         Board board = new Board();
 
         FormLayout inputsFormLayout = new FormLayout();
         Div inputsFormWrapper = new Div();
-        inputsFormWrapper.setClassName("inputs-wrapper");
         inputsFormWrapper.add(inputsFormLayout);
 
         // Inputs
@@ -78,26 +78,29 @@ public class InvoiceEditor extends Board {
         invoiceName.getElement().setAttribute("colspan", "2");
         invoiceName.setLabel("Invoice Name");
         invoiceName.setClassName("large");
+        invoiceName.setValue("Trip to Italy");
 
-        Select<String> employee = new Select<>("Jose", "Manolo", "Pedro");
+        Select<String> employee = new Select<>("Manolo", "Joonas", "Matti");
         employee.setLabel("Employee");
+        employee.setValue("Manolo");
 
         DatePicker date = new DatePicker();
+        date.setValue(LocalDate.of(2018, 12, 12));
         date.setLabel("Date");
 
         inputsFormLayout.setResponsiveSteps(
                 new FormLayout.ResponsiveStep("0",1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
-                new FormLayout.ResponsiveStep("20em", 2));
+                new FormLayout.ResponsiveStep("30em", 2));
         inputsFormLayout.setId("inputs");
         inputsFormLayout.add(invoiceName, employee, date);
 
         RichTextEditor rte = new RichTextEditor();
         rte.setThemeName("compact");
+        rte.setValue("[{\"attributes\":{\"bold\":true},\"insert\":\"Team lunch participants:\"},{\"insert\":\" Manolo, Joonas, and Matti\\nTraveling in Antwerp:\\nMetro from the hotel to the venue\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"},{\"insert\":\"Taxi from the airport to the hotel\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"}]");
         Div rteWrapper = new Div();
-        rteWrapper.setClassName("rte-wrapper");
         rteWrapper.add(rte);
-        board.addRow(inputsFormWrapper, rteWrapper);
-        controls.add(board);
+        Row dataRow = board.addRow(inputsFormWrapper, rteWrapper);
+        dataRow.setComponentSpan(rteWrapper, 2);
 
         // Adds line
         Div addsLine = new Div();
@@ -107,18 +110,13 @@ public class InvoiceEditor extends Board {
         Div btnWrapper = new Div();
         btnWrapper.setClassName("flex-1");
 
-        Button addCardTransactionBtn = new Button("Add credit card transaction");
+        Span cardTransactionText = new Span("Add credit card transaction");
+        Button addCardTransactionBtn = new Button(cardTransactionText);
         addCardTransactionBtn.setThemeName("tertiary");
         addCardTransactionBtn.setId("add-transaction");
         btnWrapper.add(addCardTransactionBtn);
 
-        Button addLine = new Button("Add Line");
-        addCardTransactionBtn.setThemeName("tertiary");
-        addCardTransactionBtn.setId("add-line");
-
-        addsLine.add(btnWrapper, addLine);
-
-        controls.add(addsLine);
+        addsLine.add(btnWrapper);
 
         // Grid Pro
         GridPro<Invoice> grid = new GridPro<>();
@@ -126,12 +124,12 @@ public class InvoiceEditor extends Board {
         grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS, GridVariant.LUMO_COMPACT);
 
         grid.addEditColumn(Invoice::getProduct).text((item, newValue) -> displayNotification("Product", item, newValue)).setHeader("Product");
-        grid.addEditColumn(Invoice::getDescription).text((item, newValue) -> displayNotification("Description", item, newValue)).setHeader("Description");
+        grid.addEditColumn(Invoice::getDescription).text((item, newValue) -> displayNotification("Description", item, newValue)).setHeader("Description").setWidth("250px");
         grid.addEditColumn(Invoice::getPrice).text((item, newValue) -> displayNotification("Price", item, newValue)).setHeader("Price");
-        grid.addEditColumn(Invoice::getCurrency).select((item, newValue) -> displayNotification("Currency", item, newValue.getStringRepresentation()), Currency.class).setHeader("Currency");
+        grid.addEditColumn(Invoice::getCurrency).select((item, newValue) -> displayNotification("Currency", item, newValue.getStringRepresentation()), Currency.class).setHeader("Currency").setWidth("150px");
         grid.addEditColumn(Invoice::getVat).text((item, newValue) -> displayNotification("VAT", item, newValue)).setHeader("VAT");
         grid.addEditColumn(Invoice::getAmount).text((item, newValue) -> displayNotification("Amount", item, newValue)).setHeader("Amount");
-        grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> displayNotification("Category", item, newValue.getStringRepresentation()), Category.class).setHeader("Category");
+        grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> displayNotification("Category", item, newValue.getStringRepresentation()), Category.class).setHeader("Category").setWidth("200px");
         grid.addEditColumn(Invoice::getOrderCompleted).checkbox((item, newValue) -> displayNotification("Order completed ", item, newValue.toString())).setHeader("Order completed");
         grid.addEditColumn(Invoice::getTotal).text((item, newValue) -> displayNotification("Total", item, newValue)).setHeader("Total");
         grid.addColumn(new NativeButtonRenderer<>("X", item -> {
@@ -140,7 +138,6 @@ public class InvoiceEditor extends Board {
             dataProvider.getItems().remove(item);
             dataProvider.refreshAll();
         })).setWidth("40px").setFlexGrow(0);
-        controls.add(grid);
 
         // Details line
         Div flexBlock = new Div();
@@ -151,6 +148,7 @@ public class InvoiceEditor extends Board {
         Div total = new Div();
 
         Select<String> totalSelect = new Select<>("USD", "EUR", "GBP");
+        totalSelect.getElement().setAttribute("theme", "custom");
         totalSelect.setClassName("currency-selector");
 
         Span totalText = new Span();
@@ -164,9 +162,7 @@ public class InvoiceEditor extends Board {
         detailsLine.add(flexBlock, total);
         detailsLine.setClassName("controls-line");
 
-        controls.add(detailsLine);
-
-        addRow(controls);
+        add(controlsLine, board, addsLine, grid, detailsLine);
     }
 
     private static void displayNotification(String propertyName, Invoice item, String newValue) {
@@ -185,14 +181,14 @@ public class InvoiceEditor extends Board {
         Invoice invoice = new Invoice();
         invoice.setId(index);
         invoice.setProduct("PVR2019");
-        invoice.setDescription("Description");
-        invoice.setPrice(300);
+        invoice.setDescription(getRandomDescription());
+        invoice.setPrice(random.nextInt(100000) / 100f);
         invoice.setCurrency(getRandomCurrency());
-        invoice.setVat(24);
-        invoice.setAmount(4);
+        invoice.setVat(1 + random.nextInt((24 - 1) + 1));
+        invoice.setAmount(1 + random.nextInt((10 - 1) + 1));
         invoice.setCategory(getRandomCategory());
         invoice.setOrderCompleted(Boolean.TRUE);
-        invoice.setTotal(1200);
+        invoice.setTotal(1 + random.nextInt((1000 - 1) + 1));
 
         return invoice;
     }
