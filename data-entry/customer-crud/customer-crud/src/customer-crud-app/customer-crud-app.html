@@ -2,6 +2,7 @@
 
 <link rel="import" href="../../bower_components/vaadin-crud/vaadin-crud.html">
 <link rel="import" href="../../bower_components/vaadin-combo-box/vaadin-combo-box.html">
+<link rel="import" href="../../bower_components/vaadin-text-field/vaadin-email-field.html">
 
 <link rel="import" href="customer-crud-styles.html">
 
@@ -13,11 +14,11 @@
     <vaadin-crud>
       <vaadin-grid slot="grid">
         <vaadin-grid-column width="160px">
-          <template class="header">Company Name</template>
+          <template class="header">Company name</template>
           <template>[[item.company.name]]</template>
         </vaadin-grid-column>
         <vaadin-grid-column>
-          <template class="header">Contact Person</template>
+          <template class="header">Contact person</template>
           <template>[[item.contact.name]]</template>
         </vaadin-grid-column>
         <vaadin-grid-column>
@@ -27,19 +28,19 @@
         <vaadin-crud-edit-column></vaadin-crud-edit-column>
       </vaadin-grid>
       <vaadin-form-layout id="companyForm" slot="form" style="max-width: 60em">
-        <vaadin-text-field path="company.name" label="Company Name" colspan="4" required></vaadin-text-field>
-        <vaadin-text-field path="contact.name" label="Contact Name" colspan="2" required></vaadin-text-field>
-        <vaadin-text-field path="contact.email" label="Contact Email" colspan="2" required></vaadin-text-field>
-        <vaadin-text-field path="location.address" label="Address" colspan="2" required></vaadin-text-field>
-        <vaadin-text-field path="location.city" label="City" required></vaadin-text-field>
-        <vaadin-text-field path="location.zip" label="Postal/Zip Code" required></vaadin-text-field>
+        <vaadin-text-field path="company.name" label="Company name" colspan="4" required></vaadin-text-field>
+        <vaadin-text-field path="contact.name" label="Contact name" colspan="2" required></vaadin-text-field>
+        <vaadin-email-field path="contact.email" label="Contact email" colspan="2" required></vaadin-email-field>
+        <vaadin-text-field path="location.address" label="Address" colspan="2"></vaadin-text-field>
+        <vaadin-text-field path="location.city" label="City"></vaadin-text-field>
+        <vaadin-text-field path="location.zip" label="Postal/Zip code"></vaadin-text-field>
         <br>
-        <vaadin-text-field path="location.region" label="Region" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="location.region" label="Region" colspan="2"></vaadin-text-field>
         <vaadin-combo-box id="countryCombo" path="location.country" colspan="2" label="Country" item-value-path="name"
           item-label-path="name"></vaadin-combo-box>
         <br>
         <vaadin-text-field path="contact.phone" label="Phone" colspan="2" required></vaadin-text-field>
-        <vaadin-text-field path="contact.fax" label="Fax" colspan="2" required></vaadin-text-field>
+        <vaadin-text-field path="contact.fax" label="Fax" colspan="2"></vaadin-text-field>
       </vaadin-form-layout>
     </vaadin-crud>
   </template>

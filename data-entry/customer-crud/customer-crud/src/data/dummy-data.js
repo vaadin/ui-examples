@@ -8,7 +8,7 @@
         "name": "ACME Corporation"
       },
       "contact": {
-        "name": "Rolf Hegdal",
+        "name": "Rolf Hegbl",
         "email": "rolf.hegbl@acme.com",
         "phone": "669-764-398",
         "fax": "406-524-579"
