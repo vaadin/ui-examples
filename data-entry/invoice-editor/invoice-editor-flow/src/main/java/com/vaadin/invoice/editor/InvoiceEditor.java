@@ -3,19 +3,21 @@ package com.vaadin.invoice.editor;
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.gridpro.GridPro;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.richtexteditor.RichTextEditor;
-import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.ListDataProvider;
-import com.vaadin.flow.data.renderer.NativeButtonRenderer;
 
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
@@ -81,8 +83,7 @@ public class InvoiceEditor extends Div {
         invoiceName.setClassName("large");
         invoiceName.setValue("Trip to Italy");
 
-        Select<String> employee = new Select<>("Manolo", "Joonas", "Matti");
-        employee.setLabel("Employee");
+        ComboBox<String> employee = new ComboBox("Employee","Manolo", "Joonas", "Matti");
         employee.setValue("Manolo");
 
         DatePicker date = new DatePicker();
@@ -126,19 +127,15 @@ public class InvoiceEditor extends Div {
 
         grid.addEditColumn(Invoice::getProduct).text((item, newValue) -> displayNotification("Product", item, newValue)).setHeader("Product");
         grid.addEditColumn(Invoice::getDescription).text((item, newValue) -> displayNotification("Description", item, newValue)).setHeader("Description").setWidth("250px");
-        grid.addEditColumn(Invoice::getPrice).text((item, newValue) -> displayNotification("Price", item, newValue)).setHeader("Price");
+        grid.addEditColumn(Invoice::getPrice).text((item, newValue) -> displayNotification("Price", item, newValue)).setHeader("Price").setTextAlign(ColumnTextAlign.END);
         grid.addEditColumn(Invoice::getCurrency).select((item, newValue) -> displayNotification("Currency", item, newValue.getStringRepresentation()), Currency.class).setHeader("Currency").setWidth("150px");
-        grid.addEditColumn(Invoice::getVat).text((item, newValue) -> displayNotification("VAT", item, newValue)).setHeader("VAT");
-        grid.addEditColumn(Invoice::getAmount).text((item, newValue) -> displayNotification("Amount", item, newValue)).setHeader("Amount");
+        grid.addEditColumn(Invoice::getVat).text((item, newValue) -> displayNotification("VAT", item, newValue)).setHeader("VAT").setTextAlign(ColumnTextAlign.END);
+        grid.addEditColumn(Invoice::getAmount).text((item, newValue) -> displayNotification("Amount", item, newValue)).setHeader("Amount").setTextAlign(ColumnTextAlign.END);
         grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> displayNotification("Category", item, newValue.getStringRepresentation()), Category.class).setHeader("Category").setWidth("200px");
         grid.addEditColumn(Invoice::getOrderCompleted).checkbox((item, newValue) -> displayNotification("Order completed ", item, newValue.toString())).setHeader("Order completed");
-        grid.addEditColumn(Invoice::getTotal).text((item, newValue) -> displayNotification("Total", item, newValue)).setHeader("Total");
-        grid.addColumn(new NativeButtonRenderer<>("X", item -> {
-            ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid
-                    .getDataProvider();
-            dataProvider.getItems().remove(item);
-            dataProvider.refreshAll();
-        })).setWidth("40px").setFlexGrow(0);
+        grid.addEditColumn(Invoice::getTotal).text((item, newValue) -> displayNotification("Total", item, newValue)).setHeader("Total").setTextAlign(ColumnTextAlign.END);
+        grid.addComponentColumn(item -> createRemoveButton(grid, item))
+                .setWidth("40px").setWidth("50px").setFlexGrow(0).setTextAlign(ColumnTextAlign.CENTER);
 
         // Details line
         Div flexBlock = new Div();
@@ -148,9 +145,9 @@ public class InvoiceEditor extends Div {
 
         Div total = new Div();
 
-        Select<String> totalSelect = new Select<>("USD", "EUR", "GBP");
-        totalSelect.getElement().setAttribute("theme", "custom");
-        totalSelect.setClassName("currency-selector");
+        ComboBox<String> totalComboBox = new ComboBox("", "USD", "EUR", "GBP");
+        totalComboBox.getElement().setAttribute("theme", "custom");
+        totalComboBox.setClassName("currency-selector");
 
         Span totalText = new Span();
         totalText.setText("Total in ");
@@ -158,12 +155,22 @@ public class InvoiceEditor extends Div {
         Span priceText = new Span();
         priceText.setText(" 812");
 
-        total.add(totalText, totalSelect, priceText);
+        total.add(totalText, totalComboBox, priceText);
 
         detailsLine.add(flexBlock, total);
         detailsLine.setClassName("controls-line");
 
         add(controlsLine, board, addsLine, grid, detailsLine);
+    }
+
+    private Button createRemoveButton(GridPro<Invoice> grid, Invoice item) {
+        Button button = new Button(new Icon(VaadinIcon.CLOSE), clickEvent -> {
+            ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid.getDataProvider();
+            dataProvider.getItems().remove(item);
+            dataProvider.refreshAll();
+        });
+        button.setClassName("delete-button");
+        return button;
     }
 
     private static void displayNotification(String propertyName, Invoice item, String newValue) {

@@ -37,6 +37,20 @@
     </template>
 </dom-module>
 
+<dom-module id="custom-button" theme-for="vaadin-button">
+    <template>
+        <style>
+            :host(.delete-button) {
+                padding: var(--lumo-space-xs) 0;
+            }
+
+            :host(.delete-button) ::slotted(*) {
+                color: var(--lumo-contrast-60pct);
+            }
+        </style>
+    </template>
+</dom-module>
+
 <custom-style>
     <style>
         html {
@@ -157,7 +171,7 @@
         }
 
         .currency-selector {
-            width: 90px;
+            width: 100px;
         }
 
         .footer {
