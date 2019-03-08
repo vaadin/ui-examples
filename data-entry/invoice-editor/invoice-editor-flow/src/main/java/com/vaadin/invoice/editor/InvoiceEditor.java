@@ -15,6 +15,7 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.richtexteditor.RichTextEditor;
+import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -83,8 +84,8 @@ public class InvoiceEditor extends Div {
         invoiceName.setClassName("large");
         invoiceName.setValue("Trip to Italy");
 
-        ComboBox<String> employee = new ComboBox("Employee","Manolo", "Joonas", "Matti");
-        employee.setValue("Manolo");
+        Select<String> employee = new Select<>("Manolo", "Joonas", "Matti");
+        employee.setLabel("Employee");
 
         DatePicker date = new DatePicker();
         date.setValue(LocalDate.of(2018, 12, 12));
@@ -145,9 +146,9 @@ public class InvoiceEditor extends Div {
 
         Div total = new Div();
 
-        ComboBox<String> totalComboBox = new ComboBox("", "USD", "EUR", "GBP");
-        totalComboBox.getElement().setAttribute("theme", "custom");
-        totalComboBox.setClassName("currency-selector");
+        Select<String> totalSelect = new Select<>("USD", "EUR", "GBP");
+        totalSelect.getElement().setAttribute("theme", "custom");
+        totalSelect.setClassName("currency-selector");
 
         Span totalText = new Span();
         totalText.setText("Total in ");
@@ -155,7 +156,7 @@ public class InvoiceEditor extends Div {
         Span priceText = new Span();
         priceText.setText(" 812");
 
-        total.add(totalText, totalComboBox, priceText);
+        total.add(totalText, totalSelect, priceText);
 
         detailsLine.add(flexBlock, total);
         detailsLine.setClassName("controls-line");
