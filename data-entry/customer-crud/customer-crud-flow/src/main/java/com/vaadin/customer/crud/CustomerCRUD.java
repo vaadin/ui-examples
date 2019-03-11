@@ -15,6 +15,7 @@ import com.vaadin.flow.component.crud.CrudI18n;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.provider.ListDataProvider;
@@ -68,27 +69,30 @@ public class CustomerCRUD extends VerticalLayout {
 
     private Grid<Company> createGrid() {
         Grid<Company> grid = new Grid<>();
-        grid.addColumn(c -> c.getCompanyName()).setHeader("Company Name")
+        grid.addColumn(c -> c.getCompanyName()).setHeader("Company name")
                 .setWidth("160px");
-        grid.addColumn(c -> c.getContactName()).setHeader("Contact Person");
+        grid.addColumn(c -> c.getContactName()).setHeader("Contact person");
         grid.addColumn(c -> c.getPhone()).setHeader("Phone");
         Crud.addEditColumn(grid);
         return grid;
     }
 
     private CrudEditor<Company> createCompanyEditor() {
-        TextField companyName = new TextField("Company Name");
+        TextField companyName = new TextField("Company name");
+        companyName.setRequiredIndicatorVisible(true);
         setColspan(companyName, 4);
-        TextField contactName = new TextField("Contact Name");
+        TextField contactName = new TextField("Contact name");
+        contactName.setRequiredIndicatorVisible(true);
         setColspan(contactName, 2);
-        TextField contactEmail = new TextField("Contact Email");
+        EmailField contactEmail = new EmailField("Contact email");
         setColspan(contactEmail, 2);
+        contactEmail.setRequiredIndicatorVisible(true);
 
         TextField address = new TextField("Address");
         setColspan(address, 2);
 
         TextField city = new TextField("City");
-        TextField zip = new TextField("Postal/Zip Code");
+        TextField zip = new TextField("Postal/Zip code");
 
         TextField region = new TextField("Region");
         setColspan(region, 2);
@@ -101,6 +105,7 @@ public class CustomerCRUD extends VerticalLayout {
         country.setItems(getCountriesList());
         TextField phone = new TextField("Phone");
         setColspan(phone, 2);
+        phone.setRequiredIndicatorVisible(true);
         TextField fax = new TextField("Fax");
         setColspan(fax, 2);
 
