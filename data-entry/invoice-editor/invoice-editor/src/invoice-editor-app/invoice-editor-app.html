@@ -40,13 +40,15 @@
     <div id="container">
       <link-banner source-link="https://github.com/vaadin/ui-examples/tree/master/data-entry/invoice-editor"></link-banner>
       <div class="controls-line">
-        <div class="invoice-details">
+        <vaadin-horizontal-layout class="invoice-details" theme="padding">
           <span>Invoice #3225</span>
           <small>Draft saved 5 minutes ago</small>
-        </div>
-        <vaadin-button on-click='__discardChanges' theme="error tertiary">Discard changes</vaadin-button>
-        <vaadin-button on-click='__saveDraft' theme="tertiary">Save draft</vaadin-button>
-        <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
+        </vaadin-horizontal-layout>
+        <vaadin-horizontal-layout class="controls-line-buttons">
+          <vaadin-button on-click='__discardChanges' theme="error tertiary">Discard changes</vaadin-button>
+          <vaadin-button on-click='__saveDraft' theme="tertiary">Save draft</vaadin-button>
+          <vaadin-button on-click='__sendInvoice' theme="primary">Send</vaadin-button>
+        </vaadin-horizontal-layout>
       </div>
       <vaadin-board>
         <vaadin-board-row>
@@ -223,7 +225,7 @@
       }
 
       __discardChanges() {
-        this.__appendInfoNotification('Changes were discard!');
+        this.__appendInfoNotification('Changes were discarded!');
       }
 
       __saveDraft() {
