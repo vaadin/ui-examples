@@ -78,6 +78,8 @@
         display: flex;
         height: 100%;
         flex-direction: column;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
       }
 
       .controls-line {
@@ -139,7 +141,7 @@
       }
 
       .icon-usd::before  {
-        content: '$'; 
+        content: '$';
         background-color: var(--lumo-success-color);
       }
 
