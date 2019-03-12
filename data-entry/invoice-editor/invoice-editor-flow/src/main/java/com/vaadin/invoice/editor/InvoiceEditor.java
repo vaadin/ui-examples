@@ -19,7 +19,7 @@ import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.data.provider.ListDataProvider;
-
+import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
@@ -39,10 +39,13 @@ import static com.vaadin.invoice.editor.Category.getRandomCategory;
 @Route("")
 @PWA(name = "Invoice Editor", shortName = "Invoice Editor")
 @HtmlImport("frontend://styles/shared-styles.html")
+@HtmlImport("frontend://src/link-banner.html")
 public class InvoiceEditor extends Div {
 
     public InvoiceEditor() {
         setId("container");
+        
+        this.getElement().appendChild(new Element("link-banner"));
 
         // Controls part
         Div controlsLine = new Div();
