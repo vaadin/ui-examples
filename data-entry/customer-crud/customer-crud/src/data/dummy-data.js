@@ -3,43 +3,385 @@
   window.Vaadin.contacts =
   [
     {
-      "_id": "7951f755ad763g27621bf44t",
+      "_id": "a34a9ce4-1f0f-4c65-9add-085a86ba559d",
       "company": {
-        "name": "ACME Corporation"
+        "name": "Alpha"
       },
       "contact": {
-        "name": "Rolf Hegbl",
-        "email": "rolf.hegbl@acme.com",
-        "phone": "669-764-398",
-        "fax": "406-524-579"
+        "name": "Julie Baroh",
+        "email": "julieb13@yahoo.com",
+        "phone": "(067) 689-8833",
+        "fax": "(214) 161-8881"
       },
       "location": {
-        "address": "Ruukinkatu 346",
-        "city": "Turku",
-        "region": "Southern Finland",
-        "zip": "3095",
-        "country": "Finland"
+        "address": "1600 Lind Ave SW",
+        "city": "Renton",
+        "region": "Washington",
+        "zip": "WA 98057",
+        "country": "United States"
       }
     },
     {
-      "_id": "1241g765ad763g23421bf47k",
+      "_id": "088bc3e1-cf84-48a4-8475-1168002b93c1",
       "company": {
-        "name": "Google"
+        "name": "Arabian Nights"
       },
       "contact": {
-        "name": "Sergey Brin",
-        "email": "sergey@google.com",
-        "phone": "123-456-789",
-        "fax": "987-654-321"
+        "name": "Kaja Foglio",
+        "email": "kaja64@gmail.com",
+        "phone": "(322) 877-4256",
+        "fax": "(214) 726-5305"
       },
       "location": {
-        "address": "Spear str 345",
-        "city": "San Francisco",
-        "region": "California",
-        "zip": "94105",
+        "address": "SE 24th St",
+        "city": "Bellevue",
+        "region": "Washington",
+        "zip": "WA 98004",
         "country": "United States"
       }
-    }
+    },
+    {
+      "_id": "2667eaac-ca61-4617-991c-b10d4d574a4a",
+      "company": {
+        "name": "Time Spiral"
+      },
+      "contact": {
+        "name": "Dan Frazier",
+        "email": "frazier51@hotmail.com",
+        "phone": "(364) 065-3803",
+        "fax": "(972) 924-7669"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "3712b173-0a41-4598-9f8e-d1fa1736a996",
+      "company": {
+        "name": "Fallen Empires"
+      },
+      "contact": {
+        "name": "Jesper Myrfors",
+        "email": "jesper45@yahoo.com",
+        "phone": "(199) 360-6272",
+        "fax": "(972) 197-0177"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "Sweden"
+      }
+    },
+    {
+      "_id": "fcf794df-b1df-4fe7-a9c7-f0c184374a1a",
+      "company": {
+        "name": "Morningtide"
+      },
+      "contact": {
+        "name": "Brian Snøddy",
+        "email": "brians1@gmail.com",
+        "phone": "(644) 936-3193",
+        "fax": "(469) 740-6825"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "65267215-fb00-491d-9ff1-c72c726c3386",
+      "company": {
+        "name": "Tempest"
+      },
+      "contact": {
+        "name": "Susan Van Camp",
+        "email": "susan19@gmail.com",
+		"phone": "(723) 338-4034",
+		"fax": "(214) 365-4444"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "021215bb-669b-4096-a25b-d5fd2eed8a49",
+      "company": {
+		"name": "Legends"
+      },
+      "contact": {
+		"name": "Liz Danforth",
+        "email": "lizd@hotmail.com",
+		"phone": "(644) 273-0079",
+		"fax": "(972) 874-5649"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "8892b7f6-b351-4cbd-bca4-208c3eefc5d6",
+      "company": {
+		"name": "Antiquities"
+      },
+      "contact": {
+		"name": "Nene Thomas",
+        "email": "nenet84@yahoo.com",
+		"phone": "(771) 509-1730",
+		"fax": "(214) 430-7750"
+      },
+      "location": {
+        "address": "",
+        "city": "Oklahoma City",
+        "region": "Oklahoma",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "20703a33-dd97-438d-aff7-f0f830bd716e",
+      "company": {
+		"name": "Alara Reborn"
+      },
+      "contact": {
+		"name": "Anthony S. Waters",
+        "email": "watersa@yahoo.com",
+		"phone": "(687) 162-0128",
+		"fax": "(469) 567-6514"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": ""
+      }
+    },
+    {
+      "_id": "146c0bb0-78b6-4e32-add7-387c264de2dd",
+      "company": {
+		"name": "Unglued"
+      },
+      "contact": {
+		"name": "David A. Cherry",
+        "email": "dcherry@gmail.com",
+		"phone": "(074) 366-4423",
+		"fax": "(469) 358-9525"
+      },
+      "location": {
+        "address": "",
+        "city": "Lawton",
+        "region": "Oklahoma",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "efaa875e-00d1-44b9-8a4e-0cfe5675080b",
+      "company": {
+		"name": "Mirage"
+      },
+      "contact": {
+		"name": "John Avon",
+        "email": "john44@yahoo.com",
+		"phone": "(714) 000-0438",
+		"fax": "(469) 468-3131"
+      },
+      "location": {
+        "address": "",
+        "city": "Cardiff",
+        "region": "South Wales",
+        "zip": "",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "_id": "efaa875e-00d1-44b9-8a4e-0cfe5675080b",
+      "company": {
+		"name": "Weatherlight"
+      },
+      "contact": {
+		"name": "Ian Miller",
+        "email": "miller74@gmail.com",
+		"phone": "(435) 307-5309",
+		"fax": "(214) 950-6083"
+      },
+      "location": {
+        "address": "",
+        "city": "London",
+        "region": "England",
+        "zip": "",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "_id": "5fde035f-40fe-46af-8b21-5037057252ba",
+      "company": {
+		"name": "Visions"
+      },
+      "contact": {
+		"name": "Tony DiTerlizzi",
+        "email": "tony75@gmail.com",
+		"phone": "(793) 088-1786",
+		"fax": "(469) 042-7450"
+      },
+      "location": {
+        "address": "",
+        "city": "Los Angeles",
+        "region": "California",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "cfb504ee-25a7-42bf-a8fc-9ea84293753a",
+      "company": {
+		"name": "Weatherlight"
+      },
+      "contact": {
+		"name": "Mark Harrison",
+        "email": "harrison96@hotmail.com",
+		"phone": "(097) 788-2612",
+		"fax": "(214) 746-6340"
+      },
+      "location": {
+        "address": "",
+        "city": "Birmingham",
+        "region": "West Midlands, England",
+        "zip": "",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "_id": "d77016d0-eee8-4396-889a-6853294523bd",
+      "company": {
+		"name": "Mercadian Masques"
+      },
+      "contact": {
+		"name": "Jeff Laubenstein",
+        "email": "jeffl53@hotmail.com",
+		"phone": "(906) 886-5063",
+		"fax": "(214) 406-8397"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": ""
+      }
+    },
+    {
+      "_id": "7afa9c89-0256-477d-8b63-6d99c76cb9bf",
+      "company": {
+		"name": "Portal"
+      },
+      "contact": {
+		"name": "Colin MacNeil",
+        "email": "colinmac@hotmail.com",
+		"phone": "(430) 300-6257",
+		"fax": "(469) 816-2081"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United Kingdom"
+      }
+    },
+    {
+      "_id": "882fdfb2-95be-4553-be65-c365497d2f4b",
+      "company": {
+		"name": "Tempest"
+      },
+      "contact": {
+		"name": "Alan Pollack",
+		"email": "alanp13@hotmail.com",
+		"phone": "(786) 663-4823",
+		"fax": "(972) 582-5980"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "New Jersey",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "616aeb2d-0128-4358-9e17-2b6470ffa37c",
+      "company": {
+		"name": "Ravnica"
+      },
+      "contact": {
+		"name": "Mark A. Nelson",
+        "email": "marka@gmail.com",
+		"phone": "(567) 679-7562",
+		"fax": "(214) 751-3014"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": "United States"
+      }
+    },
+    {
+      "_id": "03623f37-0498-45b8-85a5-381d8e8789f7",
+      "company": {
+		"name": "Zendikar"
+      },
+      "contact": {
+		"name": "Fred Fields",
+        "email": "ffields@yahoo.com",
+		"phone": "(287) 205-1594",
+		"fax": "(469) 203-4816"
+      },
+      "location": {
+        "address": "",
+        "city": "",
+        "region": "",
+        "zip": "",
+        "country": ""
+      }
+    },
+    {
+      "_id": "1dcb2287-890f-4291-816b-fce99b01786e",
+      "company": {
+		"name": "Masters 25"
+      },
+      "contact": {
+		"name": "Xi Zhang",
+        "email": "xizhang78@live.com",
+		"phone": "(561) 187-4547",
+		"fax": "(214) 481-7271"
+      },
+      "location": {
+        "address": "",
+        "city": "Kaifeng",
+        "region": "Henan",
+        "zip": "",
+        "country": "China"
+      }
+    },
   ];
   
   window.Vaadin.countries =
