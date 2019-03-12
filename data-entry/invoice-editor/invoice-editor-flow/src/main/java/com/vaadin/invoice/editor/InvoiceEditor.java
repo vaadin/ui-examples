@@ -18,6 +18,7 @@ import com.vaadin.flow.component.richtexteditor.RichTextEditor;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
@@ -52,7 +53,8 @@ public class InvoiceEditor extends Div {
         controlsLine.addClassName("controls-line");
 
         // Content
-        Div detailsWrapper = new Div();
+        HorizontalLayout detailsWrapper = new HorizontalLayout();
+        detailsWrapper.getThemeList().add("padding");
         detailsWrapper.setClassName("invoice-details");
 
         Span invoiceNameHeader = new Span("Invoice #3225");
@@ -62,7 +64,10 @@ public class InvoiceEditor extends Div {
         detailsWrapper.add(invoiceNameHeader, draftedSpan);
 
         // Buttons
-        Button discardBtn = new Button("Discard changes", e -> Notification.show("Changes were discard!"));
+        HorizontalLayout buttonsWrapper = new HorizontalLayout();
+        buttonsWrapper.addClassName("controls-line-buttons");
+        
+        Button discardBtn = new Button("Discard changes", e -> Notification.show("Changes were discarded!"));
         discardBtn.setThemeName("error tertiary");
 
         Button saveDraftBtn = new Button("Save draft", e -> Notification.show("Changes were saved!"));
@@ -70,8 +75,10 @@ public class InvoiceEditor extends Div {
 
         Button sendBtn = new Button("Send", e -> Notification.show("Invoice was sent!"));
         sendBtn.setThemeName("primary");
+        
+        buttonsWrapper.add(discardBtn, saveDraftBtn, sendBtn);
 
-        controlsLine.add(detailsWrapper, discardBtn, saveDraftBtn, sendBtn);
+        controlsLine.add(detailsWrapper, buttonsWrapper);
 
         // Input parts layout
         Board board = new Board();
