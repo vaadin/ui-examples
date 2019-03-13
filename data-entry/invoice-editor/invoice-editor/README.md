@@ -2,9 +2,17 @@
 
 Invoice Editor
 
-## Install the Polymer-CLI
+## Running locally
 
-First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) installed. Then run `polymer serve` to serve your application locally.
+1. Make sure you have [npm](https://www.npmjs.com/) installed.
+
+2. Run `npm install bower polymer-cli -g` to install tools needed to run the project.
+
+3. Run `bower install` to install dependencies.
+
+4. Run `polymer serve` to start the development server.
+
+5. Go to http://127.0.0.1:8081
 
 ## Viewing Your Application
 
@@ -21,13 +29,5 @@ $ polymer build
 This will create builds of your application in the `build/` directory, optimized to be served in production. You can then serve the built versions by giving `polymer serve` a folder to serve from:
 
 ```
-$ polymer serve build/default
+$ polymer serve build/invoice-editor-app
 ```
-
-## Running Tests
-
-```
-$ polymer test
-```
-
-Your application is already set up to be tested via [web-component-tester](https://github.com/Polymer/web-component-tester). Run `polymer test` to run your application's test suite locally.
