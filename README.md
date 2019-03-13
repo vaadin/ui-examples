@@ -19,5 +19,6 @@ This repository has the following high-level folder structure
 │   |   ├── /invoice-editor/              # Invoice Editor UI example using Polymer 2 and Vaadin components
 |   |   ├── /invoice-editor-flow/         # Invoice Editor UI example using Vaadin 13 
 |   ├── /customer-crud/
-│   |   ├── /customer-crud-flow/          # Customer CRUD example using Vaadin 13
+│   |   ├── /customer-crud/               # Customer CRUD UI example using Polymer 2 and Vaadin components
+│   |   ├── /customer-crud-flow/          # Customer CRUD UI example using Vaadin 13
 ```
