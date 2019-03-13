@@ -3,22 +3,25 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/icons.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/presets/compact.html">
 
-<style>
-  html {
-    height: 100%;
-  }
+<custom-style>
+  <style>
+    html {
+      height: 100%;
+    }
 
-  body {
-    height: 100%;
-    margin: 0;
-  }
-</style>
+    body {
+      height: 100%;
+      margin: 0;
+    }
+  </style>
+</custom-style>
 
 <dom-module id="custom-button" theme-for="vaadin-button">
   <template>
     <style>
       :host(.delete-button) {
         padding: var(--lumo-space-xs) 0;
+        margin: 0;
       }
 
       :host(.delete-button) ::slotted(*) {
@@ -126,10 +129,10 @@
         align-items: center;
         justify-content: center;
         font-weight: 600;
-        margin-right: var(--lumo-space-m);
+        margin: 0 var(--lumo-space-m);
         color: var(--lumo-base-color);
-        height: var(--lumo-size-xs);
-        width: var(--lumo-size-xs);
+        height: calc(var(--lumo-size-m) / 2);
+        width: calc(var(--lumo-size-m) / 2);
         border-radius: 50%;
       }
 
@@ -165,10 +168,6 @@
         padding: 0 var(--lumo-space-s);
       }
 
-      .flex-1 {
-        flex: 1;
-      }
-
       #add-transaction span, #add-line span {
         display: flex;
         align-items: center;
@@ -186,6 +185,13 @@
 
       .footer {
         padding-right: var(--lumo-space-m);
+        font-size: var(--lumo-font-size-m);
+        color: var(--lumo-body-text-color);
+        justify-content: flex-end;
+      }
+
+      .footer .total {
+        color: var(--lumo-header-text-color);
       }
     </style>
   </template>

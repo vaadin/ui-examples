@@ -19,6 +19,7 @@
 
 <link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro-edit-column.html">
 <link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-sorter.html">
+<link rel="import" href="../../bower_components/vaadin-grid/vaadin-grid-column-group.html">
 <link rel="import" href="../../bower_components/vaadin-grid-pro/vaadin-grid-pro.html">
 
 <link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
@@ -27,6 +28,7 @@
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/typography.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/sizing.html">
 <link rel="import" href="../../bower_components/vaadin-lumo-styles/font-icons.html">
+<link rel="import" href="../../bower_components/vaadin-lumo-styles/badge.html">
 
 <link rel="import" href="./link-banner.html">
 
@@ -37,6 +39,7 @@
 <dom-module id="invoice-editor-app">
   <template>
     <style include="invoice-editor-app-styles"></style>
+    <style include="lumo-badge"></style>
     <div id="container">
       <link-banner source-link="https://github.com/vaadin/ui-examples/tree/master/data-entry/invoice-editor"></link-banner>
       <div class="controls-line">
@@ -78,32 +81,31 @@
         </vaadin-button>
       </div>
       <vaadin-grid-pro multi-sort theme="column-borders compact" items="[[items]]" on-item-property-changed="onItemPropertyChanged">
-        <vaadin-grid-pro-edit-column path="product" header="Product" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column width="300px" path="description" header="Description" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column text-align="end" path="price" header="Price" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="currency" header="Currency" editor-type="select" header-renderer="[[sorterRenderer]]" renderer="[[currencyRenderer]]" editor-options="[[currencyOptions]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column text-align="end" path="vat" header="VAT" header-renderer="[[sorterRenderer]]" renderer="[[vatRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column text-align="end" path="amount" header="Amount" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="category" header="Category" editor-type="select" header-renderer="[[sorterRenderer]]" editor-options="[[categoryOptions]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column path="order" header="Order completed" editor-type="checkbox" header-renderer="[[sorterRenderer]]" order-renderer="[[orderRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-pro-edit-column text-align="end" path="total" header="Total" header-renderer="[[sorterRenderer]]" renderer="[[totalRenderer]]"></vaadin-grid-pro-edit-column>
-        <vaadin-grid-column width="70px" text-align="center" renderer="[[deleteRenderer]]"></vaadin-grid-edit-column>
+        <vaadin-grid-column-group resizable>
+          <vaadin-grid-pro-edit-column path="product" header="Product" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column width="300px" path="description" header="Description" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column text-align="end" path="price" header="Price" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column path="currency" header="Currency" editor-type="select" header-renderer="[[sorterRenderer]]" renderer="[[currencyRenderer]]" editor-options="[[currencyOptions]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column text-align="end" path="vat" header="VAT" header-renderer="[[sorterRenderer]]" renderer="[[vatRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column text-align="end" path="amount" header="Amount" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column path="category" header="Category" editor-type="select" header-renderer="[[sorterRenderer]]" editor-options="[[categoryOptions]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column path="order" header="Status" editor-type="checkbox" header-renderer="[[sorterRenderer]]" renderer="[[orderRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-pro-edit-column text-align="end" path="total" header="Total" header-renderer="[[sorterRenderer]]" renderer="[[totalRenderer]]"></vaadin-grid-pro-edit-column>
+          <vaadin-grid-column width="70px" text-align="center" renderer="[[deleteRenderer]]"></vaadin-grid-edit-column>
+        </vaadin-grid-column-group>
       </vaadin-grid-pro>
       <div class="controls-line footer">
-        <div class="flex-1"></div>
-        <div>
-          <span>Total in</span>
-          <vaadin-select class="currency-selector" theme="custom" value="EUR">
-            <template>
-              <vaadin-list-box>
-                <vaadin-item>USD</vaadin-item>
-                <vaadin-item>EUR</vaadin-item>
-                <vaadin-item>GBP</vaadin-item>
-              </vaadin-list-box>
-            </template>
-          </vaadin-select>
-          <span>812</span>
-        </div>
+        <span>Total in</span>
+        <vaadin-select class="currency-selector" theme="custom" value="EUR">
+          <template>
+            <vaadin-list-box>
+              <vaadin-item>USD</vaadin-item>
+              <vaadin-item>EUR</vaadin-item>
+              <vaadin-item>GBP</vaadin-item>
+            </vaadin-list-box>
+          </template>
+        </vaadin-select>
+        <span class="total">812</span>
       </div>
     </div>
   </template>
@@ -178,7 +180,7 @@
       }
 
       orderRenderer(root, column, rowData) {
-        root.textContent = rowData.item.order ? 'Yes' : 'No';
+        root.innerHTML = rowData.item.order ? '<span theme="badge success">Completed</span>' : '<span theme="badge">Open</span>';
       }
 
       totalRenderer(root, column, rowData) {
@@ -233,7 +235,7 @@
       }
 
       __sendInvoice() {
-        this.__appendInfoNotification('Invoice was send!');
+        this.__appendInfoNotification('Invoice was sent!');
       }
 
       __appendInfoNotification(msg) {
