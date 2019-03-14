@@ -55,6 +55,7 @@ public class InvoiceEditor extends Div {
         // Content
         HorizontalLayout detailsWrapper = new HorizontalLayout();
         detailsWrapper.getThemeList().add("padding");
+        detailsWrapper.getThemeList().remove("spacing");
         detailsWrapper.setClassName("invoice-details");
 
         Span invoiceNameHeader = new Span("Invoice #3225");
@@ -65,6 +66,7 @@ public class InvoiceEditor extends Div {
 
         // Buttons
         HorizontalLayout buttonsWrapper = new HorizontalLayout();
+        buttonsWrapper.getThemeList().remove("spacing");
         buttonsWrapper.addClassName("controls-line-buttons");
         
         Button discardBtn = new Button("Discard changes", e -> Notification.show("Changes were discarded!"));
@@ -95,6 +97,7 @@ public class InvoiceEditor extends Div {
         invoiceName.setValue("Trip to Italy");
 
         Select<String> employee = new Select<>("Manolo", "Joonas", "Matti");
+        employee.setValue("Manolo");
         employee.setLabel("Employee");
 
         DatePicker date = new DatePicker();
@@ -143,20 +146,18 @@ public class InvoiceEditor extends Div {
         grid.addEditColumn(Invoice::getVat).text((item, newValue) -> displayNotification("VAT", item, newValue)).setHeader("VAT").setTextAlign(ColumnTextAlign.END);
         grid.addEditColumn(Invoice::getAmount).text((item, newValue) -> displayNotification("Amount", item, newValue)).setHeader("Amount").setTextAlign(ColumnTextAlign.END);
         grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> displayNotification("Category", item, newValue.getStringRepresentation()), Category.class).setHeader("Category").setWidth("200px");
+        // Having a custom presentation for an edit column content is currently not supported with the Java APIs. See https://github.com/vaadin/vaadin-grid-pro-flow/issues/27 
         grid.addEditColumn(Invoice::getOrderCompleted).checkbox((item, newValue) -> displayNotification("Order completed ", item, newValue.toString())).setHeader("Order completed");
         grid.addEditColumn(Invoice::getTotal).text((item, newValue) -> displayNotification("Total", item, newValue)).setHeader("Total").setTextAlign(ColumnTextAlign.END);
         grid.addComponentColumn(item -> createRemoveButton(grid, item))
-                .setWidth("40px").setWidth("50px").setFlexGrow(0).setTextAlign(ColumnTextAlign.CENTER);
-
+                .setWidth("70px").setFlexGrow(0).setTextAlign(ColumnTextAlign.CENTER);
+        grid.getColumns().forEach(column -> column.setResizable(true));
+        
         // Details line
-        Div flexBlock = new Div();
-        flexBlock.setClassName("flex-1");
-
         Div detailsLine = new Div();
 
-        Div total = new Div();
-
         Select<String> totalSelect = new Select<>("USD", "EUR", "GBP");
+        totalSelect.setValue("EUR");
         totalSelect.getElement().setAttribute("theme", "custom");
         totalSelect.setClassName("currency-selector");
 
@@ -164,12 +165,11 @@ public class InvoiceEditor extends Div {
         totalText.setText("Total in ");
 
         Span priceText = new Span();
-        priceText.setText(" 812");
+        priceText.setClassName("total");
+        priceText.setText("812");
 
-        total.add(totalText, totalSelect, priceText);
-
-        detailsLine.add(flexBlock, total);
-        detailsLine.setClassName("controls-line");
+        detailsLine.add(totalText, totalSelect, priceText);
+        detailsLine.setClassName("controls-line footer");
 
         add(controlsLine, board, addsLine, grid, detailsLine);
     }
@@ -181,6 +181,7 @@ public class InvoiceEditor extends Div {
             dataProvider.refreshAll();
         });
         button.setClassName("delete-button");
+        button.addThemeName("small");
         return button;
     }
 
