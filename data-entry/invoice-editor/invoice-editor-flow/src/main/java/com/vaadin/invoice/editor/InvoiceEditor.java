@@ -1,5 +1,6 @@
 package com.vaadin.invoice.editor;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
@@ -42,6 +43,9 @@ import static com.vaadin.invoice.editor.Category.getRandomCategory;
 @HtmlImport("frontend://styles/shared-styles.html")
 @HtmlImport("frontend://src/link-banner.html")
 public class InvoiceEditor extends Div {
+	
+	private static int INVOICE_COUNT = 500;
+	private int index = INVOICE_COUNT;
 
     public InvoiceEditor() {
         setId("container");
@@ -152,7 +156,14 @@ public class InvoiceEditor extends Div {
         grid.addComponentColumn(item -> createRemoveButton(grid, item))
                 .setWidth("70px").setFlexGrow(0).setTextAlign(ColumnTextAlign.CENTER);
         grid.getColumns().forEach(column -> column.setResizable(true));
-        
+
+        addCardTransactionBtn.addClickListener(event -> {
+        	ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid.getDataProvider();
+        	dataProvider.getItems().add(createInvoice(index++,new Random()));
+        	dataProvider.refreshAll();
+        	scrollTo(grid,dataProvider.getItems().size()-1);
+        });
+                
         // Details line
         Div detailsLine = new Div();
 
@@ -174,6 +185,10 @@ public class InvoiceEditor extends Div {
         add(controlsLine, board, addsLine, grid, detailsLine);
     }
 
+    public static void scrollTo(GridPro<?> grid, int index) {
+        UI.getCurrent().getPage().executeJavaScript("$0._scrollToIndex(" + index + ")", grid.getElement());
+    }
+    
     private Button createRemoveButton(GridPro<Invoice> grid, Invoice item) {
         Button button = new Button(new Icon(VaadinIcon.CLOSE), clickEvent -> {
             ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid.getDataProvider();
@@ -192,7 +207,7 @@ public class InvoiceEditor extends Div {
 
     private static List<Invoice> createItems() {
         Random random = new Random(0);
-        return IntStream.range(1, 500)
+        return IntStream.range(1, INVOICE_COUNT)
                 .mapToObj(index -> createInvoice(index, random))
                 .collect(Collectors.toList());
     }
