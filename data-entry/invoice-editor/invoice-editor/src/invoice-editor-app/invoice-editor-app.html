@@ -80,7 +80,7 @@
           <span>Add credit card transaction</span>
         </vaadin-button>
       </div>
-      <vaadin-grid-pro multi-sort theme="column-borders compact" items="[[items]]" on-item-property-changed="onItemPropertyChanged">
+      <vaadin-grid-pro multi-sort keep-editor-open theme="column-borders compact" items="[[items]]" on-item-property-changed="onItemPropertyChanged">
         <vaadin-grid-column-group resizable>
           <vaadin-grid-pro-edit-column path="product" header="Product" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
           <vaadin-grid-pro-edit-column width="300px" path="description" header="Description" header-renderer="[[sorterRenderer]]"></vaadin-grid-pro-edit-column>
