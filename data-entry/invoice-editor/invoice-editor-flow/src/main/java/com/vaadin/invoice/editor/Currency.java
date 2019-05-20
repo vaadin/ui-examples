@@ -3,12 +3,15 @@ package com.vaadin.invoice.editor;
 import java.util.Random;
 
 public enum Currency {
-    EURO("EUR"), USD("USD"), GBP("GBP");
+    EUR("EUR", "€"), USD("USD", "$"), GBP("GBP", "£");
 
     private String stringRepresentation;
 
-    private Currency(String stringRepresentation) {
+    private String symbol;
+
+    private Currency(String stringRepresentation, String symbol) {
         this.stringRepresentation = stringRepresentation;
+        this.symbol = symbol;
     }
 
     public static Currency getRandomCurrency() {
@@ -18,6 +21,10 @@ public enum Currency {
 
     public String getStringRepresentation() {
         return stringRepresentation;
+    }
+
+    public String getSymbol() {
+        return symbol;
     }
 
     @Override

@@ -1,9 +1,14 @@
 package com.vaadin.invoice.editor;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dependency.HtmlImport;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -14,25 +19,21 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.richtexteditor.RichTextEditor;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.data.provider.ListDataProvider;
+import com.vaadin.flow.data.renderer.ComponentRenderer;
+import com.vaadin.flow.data.renderer.TemplateRenderer;
 import com.vaadin.flow.dom.Element;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Random;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
-import static com.vaadin.invoice.editor.Description.getRandomDescription;
-import static com.vaadin.invoice.editor.Currency.getRandomCurrency;
 import static com.vaadin.invoice.editor.Category.getRandomCategory;
+import static com.vaadin.invoice.editor.Currency.getRandomCurrency;
+import static com.vaadin.invoice.editor.Description.getRandomDescription;
 
 /**
  * The main view contains a button and a click listener.
@@ -45,7 +46,7 @@ public class InvoiceEditor extends Div {
 
     public InvoiceEditor() {
         setId("container");
-        
+
         this.getElement().appendChild(new Element("link-banner"));
 
         // Controls part
@@ -68,16 +69,19 @@ public class InvoiceEditor extends Div {
         HorizontalLayout buttonsWrapper = new HorizontalLayout();
         buttonsWrapper.getThemeList().remove("spacing");
         buttonsWrapper.addClassName("controls-line-buttons");
-        
-        Button discardBtn = new Button("Discard changes", e -> Notification.show("Changes were discarded!"));
+
+        Button discardBtn = new Button("Discard changes",
+                e -> Notification.show("Changes were discarded!"));
         discardBtn.setThemeName("error tertiary");
 
-        Button saveDraftBtn = new Button("Save draft", e -> Notification.show("Changes were saved!"));
+        Button saveDraftBtn = new Button("Save draft",
+                e -> Notification.show("Changes were saved!"));
         saveDraftBtn.setThemeName("tertiary");
 
-        Button sendBtn = new Button("Send", e -> Notification.show("Invoice was sent!"));
+        Button sendBtn = new Button("Send",
+                e -> Notification.show("Invoice was sent!"));
         sendBtn.setThemeName("primary");
-        
+
         buttonsWrapper.add(discardBtn, saveDraftBtn, sendBtn);
 
         controlsLine.add(detailsWrapper, buttonsWrapper);
@@ -105,14 +109,16 @@ public class InvoiceEditor extends Div {
         date.setLabel("Date");
 
         inputsFormLayout.setResponsiveSteps(
-                new FormLayout.ResponsiveStep("0",1, FormLayout.ResponsiveStep.LabelsPosition.TOP),
+                new FormLayout.ResponsiveStep("0", 1,
+                        FormLayout.ResponsiveStep.LabelsPosition.TOP),
                 new FormLayout.ResponsiveStep("30em", 2));
         inputsFormLayout.setId("inputs");
         inputsFormLayout.add(invoiceName, employee, date);
 
         RichTextEditor rte = new RichTextEditor();
         rte.setThemeName("compact");
-        rte.setValue("[{\"attributes\":{\"bold\":true},\"insert\":\"Team lunch participants:\"},{\"insert\":\" Manolo, Joonas, and Matti\\nTraveling in Antwerp:\\nMetro from the hotel to the venue\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"},{\"insert\":\"Taxi from the airport to the hotel\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"}]");
+        rte.setValue(
+                "[{\"attributes\":{\"bold\":true},\"insert\":\"Team lunch participants:\"},{\"insert\":\" Manolo, Joonas, and Matti\\nTraveling in Antwerp:\\nMetro from the hotel to the venue\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"},{\"insert\":\"Taxi from the airport to the hotel\"},{\"attributes\":{\"list\":\"bullet\"},\"insert\":\"\\n\"}]");
         Div rteWrapper = new Div();
         rteWrapper.add(rte);
         Row dataRow = board.addRow(inputsFormWrapper, rteWrapper);
@@ -137,22 +143,79 @@ public class InvoiceEditor extends Div {
         // Grid Pro
         GridPro<Invoice> grid = new GridPro<>();
         grid.setItems(createItems());
-        grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS, GridVariant.LUMO_COMPACT);
+        grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS,
+                GridVariant.LUMO_COMPACT);
 
-        grid.addEditColumn(Invoice::getProduct).text((item, newValue) -> displayNotification("Product", item, newValue)).setHeader("Product");
-        grid.addEditColumn(Invoice::getDescription).text((item, newValue) -> displayNotification("Description", item, newValue)).setHeader("Description").setWidth("250px");
-        grid.addEditColumn(Invoice::getPrice).text((item, newValue) -> displayNotification("Price", item, newValue)).setHeader("Price").setTextAlign(ColumnTextAlign.END);
-        grid.addEditColumn(Invoice::getCurrency).select((item, newValue) -> displayNotification("Currency", item, newValue.getStringRepresentation()), Currency.class).setHeader("Currency").setWidth("150px");
-        grid.addEditColumn(Invoice::getVat).text((item, newValue) -> displayNotification("VAT", item, newValue)).setHeader("VAT").setTextAlign(ColumnTextAlign.END);
-        grid.addEditColumn(Invoice::getAmount).text((item, newValue) -> displayNotification("Amount", item, newValue)).setHeader("Amount").setTextAlign(ColumnTextAlign.END);
-        grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> displayNotification("Category", item, newValue.getStringRepresentation()), Category.class).setHeader("Category").setWidth("200px");
-        // Having a custom presentation for an edit column content is currently not supported with the Java APIs. See https://github.com/vaadin/vaadin-grid-pro-flow/issues/27 
-        grid.addEditColumn(Invoice::getOrderCompleted).checkbox((item, newValue) -> displayNotification("Order completed ", item, newValue.toString())).setHeader("Order completed");
-        grid.addEditColumn(Invoice::getTotal).text((item, newValue) -> displayNotification("Total", item, newValue)).setHeader("Total").setTextAlign(ColumnTextAlign.END);
+        grid.addEditColumn(Invoice::getProduct).text((item,
+                newValue) -> displayNotification("Product", item, newValue))
+                .setHeader("Product");
+        grid.addEditColumn(Invoice::getDescription)
+                .text((item, newValue) -> displayNotification("Description",
+                        item, newValue))
+                .setHeader("Description").setWidth("250px");
+        grid.addEditColumn(Invoice::getPrice)
+                .text((item, newValue) -> displayNotification("Price", item,
+                        newValue))
+                .setHeader("Price").setTextAlign(ColumnTextAlign.END);
+
+        ComponentRenderer<Div, Invoice> currencyRenderer = new ComponentRenderer<>(
+                invoice -> {
+                    Div icon = new Div();
+                    icon.setText(invoice.getCurrency().name());
+                    icon.setClassName("icon-"
+                            + invoice.getCurrency().name().toLowerCase());
+                    return icon;
+                });
+
+        grid.addEditColumn(Invoice::getCurrency, currencyRenderer)
+                .select((item, newValue) -> displayNotification("Currency",
+                        item, newValue.getStringRepresentation()),
+                        Currency.class)
+                .setHeader("Currency").setWidth("150px");
+
+        grid.addEditColumn(Invoice::getVat,
+                TemplateRenderer.<Invoice> of("[[item.vat]]%")
+                        .withProperty("vat", Invoice::getVat))
+                .text((item, newValue) -> displayNotification("VAT", item,
+                        newValue))
+                .setHeader("VAT").setTextAlign(ColumnTextAlign.END);
+        grid.addEditColumn(Invoice::getAmount)
+                .text((item, newValue) -> displayNotification("Amount", item,
+                        newValue))
+                .setHeader("Amount").setTextAlign(ColumnTextAlign.END);
+        grid.addEditColumn(Invoice::getCategory)
+                .select((item, newValue) -> displayNotification("Category",
+                        item, newValue.getStringRepresentation()),
+                        Category.class)
+                .setHeader("Category").setWidth("200px");
+
+        ComponentRenderer<Span, Invoice> statusRenderer = new ComponentRenderer<>(
+                invoice -> {
+                    Span badge = new Span();
+                    badge.setText(
+                            invoice.getOrderCompleted() ? "Completed" : "Open");
+                    badge.getElement().setAttribute("theme",
+                            invoice.getOrderCompleted() ? "badge success"
+                                    : "badge");
+                    return badge;
+                });
+        grid.addEditColumn(Invoice::getOrderCompleted, statusRenderer)
+                .checkbox((item, newValue) -> displayNotification(
+                        "Order completed ", item, newValue.toString()))
+                .setHeader("Order completed");
+        grid.addEditColumn(Invoice::getTotal,
+                TemplateRenderer.<Invoice> of("[[item.symbol]][[item.total]]")
+                        .withProperty("symbol",
+                                invoice -> invoice.getCurrency().getSymbol())
+                        .withProperty("total", Invoice::getTotal))
+                .text((item, newValue) -> displayNotification("Total", item,
+                        newValue))
+                .setHeader("Total").setTextAlign(ColumnTextAlign.END);
         grid.addComponentColumn(item -> createRemoveButton(grid, item))
-                .setWidth("70px").setFlexGrow(0).setTextAlign(ColumnTextAlign.CENTER);
+                .setWidth("70px").setFlexGrow(0)
+                .setTextAlign(ColumnTextAlign.CENTER);
         grid.getColumns().forEach(column -> column.setResizable(true));
-        
+
         // Details line
         Div detailsLine = new Div();
 
@@ -176,7 +239,8 @@ public class InvoiceEditor extends Div {
 
     private Button createRemoveButton(GridPro<Invoice> grid, Invoice item) {
         Button button = new Button(new Icon(VaadinIcon.CLOSE), clickEvent -> {
-            ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid.getDataProvider();
+            ListDataProvider<Invoice> dataProvider = (ListDataProvider<Invoice>) grid
+                    .getDataProvider();
             dataProvider.getItems().remove(item);
             dataProvider.refreshAll();
         });
@@ -185,14 +249,15 @@ public class InvoiceEditor extends Div {
         return button;
     }
 
-    private static void displayNotification(String propertyName, Invoice item, String newValue) {
-        Notification.show(
-                propertyName + " was changed to " + newValue + " for item: " + item.toString());
+    private static void displayNotification(String propertyName, Invoice item,
+            String newValue) {
+        Notification.show(propertyName + " was changed to " + newValue
+                + " for item: " + item.toString());
     }
 
     private static List<Invoice> createItems() {
         Random random = new Random(0);
-        return IntStream.range(1, 500)
+        return IntStream.range(1, 14)
                 .mapToObj(index -> createInvoice(index, random))
                 .collect(Collectors.toList());
     }
@@ -207,7 +272,7 @@ public class InvoiceEditor extends Div {
         invoice.setVat(1 + random.nextInt((24 - 1) + 1));
         invoice.setAmount(1 + random.nextInt((10 - 1) + 1));
         invoice.setCategory(getRandomCategory());
-        invoice.setOrderCompleted(Boolean.TRUE);
+        invoice.setOrderCompleted(random.nextBoolean());
         invoice.setTotal(1 + random.nextInt((1000 - 1) + 1));
 
         return invoice;
