@@ -7,6 +7,6 @@
   },
   "devDependencies": {
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "vaadin": "vaadin/vaadin#^13.0.0"
+    "vaadin": "vaadin/vaadin#^14.0.0-beta2"
   }
 }
