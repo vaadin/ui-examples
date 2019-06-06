@@ -3,7 +3,6 @@ package com.vaadin.invoice.editor;
 import java.io.Serializable;
 
 public class Invoice implements Serializable {
-    private int id;
     private String product;
     private String description;
     private float price;
@@ -18,7 +17,8 @@ public class Invoice implements Serializable {
         super();
     }
 
-    public Invoice(String description, int price, Currency currency, int vat, int amount, Category category, Boolean isOrderCompleted, int total) {
+    public Invoice(String product, String description, int price, Currency currency, int vat, int amount, Category category, Boolean isOrderCompleted, int total) {
+        this.product = product;
         this.description = description;
         this.price = price;
         this.currency = currency;
@@ -31,15 +31,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return "Invoice with id " + id;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return  product;
     }
 
     public String getProduct() {
@@ -112,22 +104,6 @@ public class Invoice implements Serializable {
 
     public void setTotal(int total) {
         this.total = total;
-    }
-
-    @Override
-    public int hashCode() {
-        return id;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj)
-            return true;
-        if (!(obj instanceof Invoice)) {
-            return false;
-        }
-        Invoice other = (Invoice) obj;
-        return id == other.id;
     }
 
     @Override
