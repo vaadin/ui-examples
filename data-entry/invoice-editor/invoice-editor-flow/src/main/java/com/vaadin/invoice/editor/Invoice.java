@@ -17,7 +17,8 @@ public class Invoice implements Serializable {
         super();
     }
 
-    public Invoice(String description, int price, Currency currency, int vat, int amount, Category category, Boolean isOrderCompleted, int total) {
+    public Invoice(String product, String description, int price, Currency currency, int vat, int amount, Category category, Boolean isOrderCompleted, int total) {
+        this.product = product;
         this.description = description;
         this.price = price;
         this.currency = currency;
@@ -30,7 +31,7 @@ public class Invoice implements Serializable {
 
     @Override
     public String toString() {
-        return " product " + product;
+        return  product;
     }
 
     public String getProduct() {
