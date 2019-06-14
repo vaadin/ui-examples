@@ -8,20 +8,6 @@
   "devDependencies": {
     "web-component-tester": "Polymer/web-component-tester#^6.0.0",
     "webcomponentsjs": "webcomponents/webcomponentsjs#^1.0.0",
-    "vaadin-ordered-layout": "vaadin/vaadin-ordered-layout#^1.1.0",
-    "vaadin-text-field": "vaadin/vaadin-text-field#^2.3.0",
-    "vaadin-select": "vaadin/vaadin-select#^2.0.0",
-    "vaadin-date-picker": "vaadin/vaadin-date-picker#^3.3.2",
-    "vaadin-rich-text-editor": "vaadin/vaadin-rich-text-editor#^1.0.0",
-    "vaadin-grid": "vaadin/vaadin-grid#^5.3.0",
-    "vaadin-grid-pro": "vaadin/vaadin-grid-pro#^2.0.0",
-    "vaadin-button": "vaadin/vaadin-button#^2.1.1",
-    "vaadin-list-box": "vaadin/vaadin-list-box#^1.1.0",
-    "vaadin-item": "vaadin/vaadin-item#^2.1.0",
-    "vaadin-form-layout": "vaadin/vaadin-form-layout#^2.1.0",
-    "vaadin-tabs": "vaadin/vaadin-tabs#^2.1.1",
-    "vaadin-board": "vaadin/vaadin-board#^2.1.0",
-    "vaadin-notification": "vaadin/vaadin-notification#^1.2.1",
-    "iron-icon": "^2.0.1"
+    "vaadin": "vaadin/vaadin#^14.0.0-beta3"
   }
 }
