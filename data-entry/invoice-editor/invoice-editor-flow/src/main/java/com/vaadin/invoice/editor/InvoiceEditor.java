@@ -11,7 +11,7 @@ import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.board.Row;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.datepicker.DatePicker;
-import com.vaadin.flow.component.dependency.HtmlImport;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.GridVariant;
@@ -41,8 +41,8 @@ import static com.vaadin.invoice.editor.Description.getRandomDescription;
  */
 @Route("")
 @PWA(name = "Invoice Editor", shortName = "Invoice Editor")
-@HtmlImport("frontend://styles/shared-styles.html")
-@HtmlImport("frontend://src/link-banner.html")
+@JsModule("./styles/shared-styles.js")
+@JsModule("./src/link-banner.js")
 public class InvoiceEditor extends Div {
 
     public InvoiceEditor() {
@@ -147,33 +147,30 @@ public class InvoiceEditor extends Div {
         grid.setItems(invoiceList);
 
         addCardTransactionBtn.addClickListener(e -> {
-            invoiceList.add(0, new Invoice("", "", 0, Currency.EUR, 0, 0, Category.PERSONAL, false, 0));
+            invoiceList.add(0, new Invoice("", "", 0, Currency.EUR, 0, 0,
+                    Category.PERSONAL, false, 0));
             grid.getDataProvider().refreshAll();
         });
 
         grid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS,
                 GridVariant.LUMO_COMPACT);
 
-        grid.addEditColumn(Invoice::getProduct, "product").text((item,
-                newValue) -> {
-            item.setProduct(newValue);
-            displayNotification("Product", item, newValue);
-        })
-                .setHeader("Product");
+        grid.addEditColumn(Invoice::getProduct, "product")
+                .text((item, newValue) -> {
+                    item.setProduct(newValue);
+                    displayNotification("Product", item, newValue);
+                }).setHeader("Product");
         grid.addEditColumn(Invoice::getDescription, "description")
                 .text((item, newValue) -> {
                     item.setDescription(newValue);
-                    displayNotification("Description",
-                            item, newValue);
-                })
-                .setHeader("Description").setWidth("250px");
+                    displayNotification("Description", item, newValue);
+                }).setHeader("Description").setWidth("250px");
         grid.addEditColumn(Invoice::getPrice, "price")
                 .text((item, newValue) -> {
                     try {
                         item.setPrice(Float.valueOf(newValue));
-                        displayNotification("Price", item,
-                                newValue);
-                    } catch(Exception e) {
+                        displayNotification("Price", item, newValue);
+                    } catch (Exception e) {
                         displayNotification("Price", item);
                     }
                 }).setHeader("Price").setTextAlign(ColumnTextAlign.END);
@@ -190,11 +187,11 @@ public class InvoiceEditor extends Div {
         grid.addEditColumn(Invoice::getCurrency, currencyRenderer)
                 .select((item, newValue) -> {
                     item.setCurrency(newValue);
-                    displayNotification("Currency",
-                                    item, newValue.getStringRepresentation());
-                        },
-                        Currency.class)
-                .setComparator(Comparator.comparing(inv -> inv.getCurrency().getStringRepresentation()))
+                    displayNotification("Currency", item,
+                            newValue.getStringRepresentation());
+                }, Currency.class)
+                .setComparator(Comparator.comparing(
+                        inv -> inv.getCurrency().getStringRepresentation()))
                 .setHeader("Currency").setWidth("150px");
 
         grid.addEditColumn(Invoice::getVat,
@@ -203,32 +200,28 @@ public class InvoiceEditor extends Div {
                 .text((item, newValue) -> {
                     try {
                         item.setVat(Integer.valueOf(newValue));
-                        displayNotification("VAT", item,
-                                newValue);
-                    } catch(Exception e) {
+                        displayNotification("VAT", item, newValue);
+                    } catch (Exception e) {
                         displayNotification("VAT", item);
                     }
-                })
-                .setComparator(Comparator.comparing(inv -> inv.getVat()))
+                }).setComparator(Comparator.comparing(inv -> inv.getVat()))
                 .setHeader("VAT").setTextAlign(ColumnTextAlign.END);
         grid.addEditColumn(Invoice::getAmount, "amount")
                 .text((item, newValue) -> {
                     try {
                         item.setAmount(Integer.valueOf(newValue));
-                        displayNotification("Amount", item,
-                                newValue);
-                    } catch(Exception e) {
+                        displayNotification("Amount", item, newValue);
+                    } catch (Exception e) {
                         displayNotification("Amount", item);
                     }
                 }).setHeader("Amount").setTextAlign(ColumnTextAlign.END);
-        grid.addEditColumn(Invoice::getCategory)
-                .select((item, newValue) -> {
-                    item.setCategory(newValue);
-                    displayNotification("Category",
-                                    item, newValue.getStringRepresentation());
-                        },
-                        Category.class)
-                .setComparator(Comparator.comparing(inv -> inv.getCategory().getStringRepresentation()))
+        grid.addEditColumn(Invoice::getCategory).select((item, newValue) -> {
+            item.setCategory(newValue);
+            displayNotification("Category", item,
+                    newValue.getStringRepresentation());
+        }, Category.class)
+                .setComparator(Comparator.comparing(
+                        inv -> inv.getCategory().getStringRepresentation()))
                 .setHeader("Category").setWidth("200px");
 
         ComponentRenderer<Span, Invoice> statusRenderer = new ComponentRenderer<>(
@@ -244,10 +237,11 @@ public class InvoiceEditor extends Div {
         grid.addEditColumn(Invoice::getOrderCompleted, statusRenderer)
                 .checkbox((item, newValue) -> {
                     item.setOrderCompleted(newValue);
-                    displayNotification(
-                            "Order completed ", item, newValue.toString());
+                    displayNotification("Order completed ", item,
+                            newValue.toString());
                 })
-                .setComparator(Comparator.comparing(inv -> inv.getOrderCompleted()))
+                .setComparator(
+                        Comparator.comparing(inv -> inv.getOrderCompleted()))
                 .setHeader("Status");
         grid.addEditColumn(Invoice::getTotal,
                 TemplateRenderer.<Invoice> of("[[item.symbol]][[item.total]]")
@@ -257,13 +251,11 @@ public class InvoiceEditor extends Div {
                 .text((item, newValue) -> {
                     try {
                         item.setTotal(Integer.valueOf(newValue));
-                        displayNotification("Total", item,
-                                newValue);
-                    } catch(Exception e) {
+                        displayNotification("Total", item, newValue);
+                    } catch (Exception e) {
                         displayNotification("Total", item);
                     }
-                })
-                .setComparator(Comparator.comparing(inv -> inv.getTotal()))
+                }).setComparator(Comparator.comparing(inv -> inv.getTotal()))
                 .setHeader("Total").setTextAlign(ColumnTextAlign.END);
         grid.addComponentColumn(item -> createRemoveButton(grid, item))
                 .setWidth("70px").setFlexGrow(0)
@@ -307,13 +299,14 @@ public class InvoiceEditor extends Div {
     }
 
     private static void displayNotification(String propertyName, Invoice item,
-                                             String newValue) {
+            String newValue) {
         Notification.show(propertyName + " was updated to be: " + newValue
                 + " for product " + item.toString());
     }
 
     private static void displayNotification(String propertyName, Invoice item) {
-        Notification.show(propertyName + " cannot be set for product " + item.toString());
+        Notification.show(
+                propertyName + " cannot be set for product " + item.toString());
     }
 
     private static List<Invoice> createItems() {
