@@ -1,8 +1,11 @@
-<link rel="import" href="../../bower_components/polymer/polymer-element.html">
-<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+import {PolymerElement, html} from '@polymer/polymer/polymer-element.js';
+import '@polymer/iron-icon/iron-icon.js';
 
-<dom-module id="link-banner">
-  <template>
+class LinkBanner extends PolymerElement {
+  static get is() { return 'link-banner'; }
+
+  static get template() {
+    return html`
     <style>
       :host {
         font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Roboto", "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
@@ -108,22 +111,13 @@
       </a>
       <a href="https://vaadin.com/components/demo-apps/data-entry" id="examples-link">MORE APP EXAMPLES</a>
       <iron-icon id="hide-icon" tabindex="0" icon="lumo:cross" slot="prefix" on-click="hide"></iron-icon>
-    </div>
-  </template>
+    </div>`;
+  }
 
-  <script>
-    /**
-     * @customElement
-     * @polymer
-     */
-    class LinkBanner extends Polymer.Element {
-      static get is() { return 'link-banner'; }
+  hide() {
+    this.hidden = true;
+  }
+}
 
-      hide() {
-        this.hidden = true;
-      }
-    }
+window.customElements.define(LinkBanner.is, LinkBanner);
 
-    window.customElements.define(LinkBanner.is, LinkBanner);
-  </script>
-</dom-module>
