@@ -19,6 +19,13 @@
     </properties>
 
     <repositories>
+        <repository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <!-- Repository used by many Vaadin add-ons -->
         <repository>
              <id>Vaadin Directory</id>
@@ -37,6 +44,13 @@
     </repositories>
 
     <pluginRepositories>
+        <pluginRepository>
+            <id>central</id>
+            <url>https://repo.maven.apache.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+        </snapshots>
+        </pluginRepository>
         <!-- Repository needed for prerelease versions of Vaadin -->
         <pluginRepository>
             <id>vaadin-prereleases</id>
