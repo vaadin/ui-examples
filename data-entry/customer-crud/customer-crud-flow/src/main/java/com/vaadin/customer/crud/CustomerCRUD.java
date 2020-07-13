@@ -23,7 +23,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 
 @Route("")
-@PWA(name = "Customer CRUD", shortName = "Customer CRUD")
 public class CustomerCRUD extends VerticalLayout {
 
     public CustomerCRUD() {
