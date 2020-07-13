@@ -40,7 +40,6 @@ import static com.vaadin.invoice.editor.Description.getRandomDescription;
  * The main view contains a button and a click listener.
  */
 @Route("")
-@PWA(name = "Invoice Editor", shortName = "Invoice Editor")
 @JsModule("./styles/shared-styles.js")
 @JsModule("./src/link-banner.js")
 public class InvoiceEditor extends Div {
